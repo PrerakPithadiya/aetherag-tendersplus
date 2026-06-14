@@ -40,23 +40,19 @@ export default function Enterprise() {
 
     const observerOptions = {
       threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("opacity-100", "translate-y-0");
-          entry.target.classList.remove("opacity-0", "translate-y-10");
+          entry.target.classList.add("active");
         }
       });
     }, observerOptions);
 
-    // Apply animation attributes directly to sections like page-2.html
-    const sections = document.querySelectorAll("section");
-    sections.forEach((section) => {
-      section.classList.add("transition-all", "duration-1000", "opacity-0", "translate-y-10");
-      observer.observe(section);
-    });
+    const elements = document.querySelectorAll(".reveal");
+    elements.forEach((el) => observer.observe(el));
 
     // Handle hash scroll on mount
     const hash = window.location.hash;
@@ -79,7 +75,7 @@ export default function Enterprise() {
       if (metaDesc && prevDesc) {
         metaDesc.setAttribute("content", prevDesc);
       }
-      sections.forEach((section) => observer.unobserve(section));
+      elements.forEach((el) => observer.unobserve(el));
     };
   }, []);
 
@@ -101,215 +97,218 @@ export default function Enterprise() {
   };
 
   return (
-    <div className="bg-canvas text-on-surface font-body selection:bg-secondary-fixed selection:text-on-secondary-fixed">
-      {/* Hero Section */}
-      <section className="relative min-h-[870px] flex items-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img
-            className="w-full h-full object-cover grayscale-[20%] brightness-75"
-            alt="A wide cinematic landscape of a rolling wheat field under a dramatic, moody sunset with long shadows."
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCafbcLz68qPrd_myoh8b5tpsP5mdezQQD9zWS8cLO5hxPk-6ephD4agIPn-LFfO5ziCu-h3gMTrNDItUpJETjSYJU4u9G0fqEylr3T16yPAIR2JR1vRFPDk4MQpT2XdGqr_Mbw4Fji--emrL_qoDfatTGMlaYKG0hIWY7Q6wC0cs7iIhVpYHR_Ax2aXXtQU0RQXOSetlvnbI8u7OybXGxe01uqCk6XIfjuTB87l2YW48aaN--au546HSvTcO3gxb9tBEgqPvi07pk"
-          />
-        </div>
-        <div className="relative z-10 max-w-[1280px] mx-auto px-8 w-full">
-          <div className="max-w-3xl">
-            <h1 className="font-headline text-[56px] leading-[1.1] text-white mb-6">
-              Planetary Stewardship at Enterprise Scale
-            </h1>
-            <p className="font-body text-xl text-white/90 mb-10 max-w-xl">
-              AetherAg empowers multinational agricultural enterprises to synchronize yields with ecological restoration. High-resolution data for a high-stakes future.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <a
-                className="bg-secondary text-on-secondary px-8 py-4 rounded-lg font-label text-label-md tracking-wider flex items-center justify-center gap-2 hover:bg-on-secondary-container transition-colors cursor-pointer"
-                onClick={() => {
-                  const el = document.getElementById("calculator");
-                  if (el) el.scrollIntoView({ behavior: "smooth" });
-                }}
-              >
-                LAUNCH ROI CALCULATOR
-              </a>
-              <a
-                className="bg-white/10 backdrop-blur-md border border-white/30 text-white px-8 py-4 rounded-lg font-label text-label-md tracking-wider text-center hover:bg-white/20 transition-colors cursor-pointer"
-                onClick={() => {
-                  const el = document.getElementById("contact");
-                  if (el) el.scrollIntoView({ behavior: "smooth" });
-                }}
-              >
-                CONSULT AN AGRONOMIST
-              </a>
-            </div>
+    <div className="bg-background text-on-surface font-body selection:bg-secondary-container selection:text-on-secondary-container">
+      {/* Hero Section - Asymmetric Layout with Overlapping Design */}
+      <section className="max-w-container-max mx-auto px-12 py-xl md:py-[120px] flex flex-col md:grid md:grid-cols-12 gap-gutter relative overflow-hidden">
+        {/* Text column - Left */}
+        <div className="md:col-span-7 flex flex-col justify-center z-10 reveal active">
+          <span className="font-label text-label-md text-secondary mb-base tracking-widest uppercase">
+            Planetary Stewardship
+          </span>
+          <h1 className="font-headline text-[44px] md:text-[56px] leading-[1.1] mb-md text-primary">
+            Planetary Stewardship at <span className="italic">Enterprise</span> Scale.
+          </h1>
+          <p className="font-body text-body-lg text-on-surface-variant mb-lg max-w-[480px]">
+            AetherAg empowers multinational agricultural enterprises to synchronize yields with ecological restoration. High-resolution data for a high-stakes future.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-md">
+            <button
+              onClick={() => {
+                const el = document.getElementById("calculator");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="bg-secondary text-white px-8 py-3 rounded-DEFAULT font-label text-label-md hover:bg-opacity-95 transition-all cursor-pointer text-center"
+            >
+              LAUNCH ROI CALCULATOR
+            </button>
+            <button
+              onClick={() => {
+                const el = document.getElementById("contact");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="border border-primary text-primary px-8 py-3 rounded-DEFAULT font-label text-label-md hover:bg-surface-container transition-all cursor-pointer text-center"
+            >
+              CONSULT AN AGRONOMIST
+            </button>
           </div>
         </div>
-        <div className="absolute bottom-10 right-10 text-white/40 flex items-center gap-4">
-          <span className="text-xs font-label tracking-widest uppercase">Scroll to explore</span>
-          <div className="w-px h-12 bg-white/40"></div>
+
+        {/* Asymmetric Overlapping Images - Right */}
+        <div className="md:col-span-5 relative mt-xl md:mt-0 reveal active">
+          <div className="relative w-full aspect-[4/5] overflow-hidden rounded-lg shadow-ambient border border-outline-variant/20">
+            <img
+              alt="Cinematic sunset wheat field"
+              className="w-full h-full object-cover grayscale-[0.2] hover:grayscale-0 transition-all duration-700"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCafbcLz68qPrd_myoh8b5tpsP5mdezQQD9zWS8cLO5hxPk-6ephD4agIPn-LFfO5ziCu-h3gMTrNDItUpJETjSYJU4u9G0fqEylr3T16yPAIR2JR1vRFPDk4MQpT2XdGqr_Mbw4Fji--emrL_qoDfatTGMlaYKG0hIWY7Q6wC0cs7iIhVpYHR_Ax2aXXtQU0RQXOSetlvnbI8u7OybXGxe01uqCk6XIfjuTB87l2YW48aaN--au546HSvTcO3gxb9tBEgqPvi07pk"
+            />
+          </div>
+          <div className="absolute -bottom-12 -left-12 w-64 h-64 bg-secondary-container z-0 opacity-40 rounded-full blur-3xl"></div>
         </div>
       </section>
 
-      {/* Capabilities Bento Grid */}
-      <section className="py-24 max-w-[1280px] mx-auto px-8">
-        <div className="mb-16">
-          <span className="font-label text-label-sm uppercase tracking-[0.2em] text-secondary mb-4 block">
-            Core Competencies
-          </span>
-          <h2 className="font-headline text-4xl text-on-surface">
-            Precision Infrastructure
-          </h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[280px]">
-          {/* Item 1 */}
-          <div className="md:col-span-8 bg-surface-container-low p-10 rounded-xl flex flex-col justify-between group hover:bg-surface-container transition-all">
-            <div>
-              <span className="material-symbols-outlined text-secondary text-4xl mb-4">hub</span>
-              <h3 className="font-headline text-2xl mb-2 text-primary">Multi-Region Tenant Architecture</h3>
-              <p className="text-on-surface-variant max-w-md">
-                Orchestrate operations across continents with localized data compliance and unified global reporting dashboards.
-              </p>
-            </div>
-            <div className="text-secondary font-label text-label-md flex items-center gap-2 cursor-pointer font-bold">
-              View Schema <span className="material-symbols-outlined text-sm">arrow_forward</span>
-            </div>
+      {/* Capabilities Section - Bento Style aligned to AetherAg palette */}
+      <section className="bg-surface-container-low py-xl border-y border-outline-variant/20">
+        <div className="max-w-container-max mx-auto px-12">
+          <div className="mb-16 reveal">
+            <span className="font-label text-label-sm uppercase tracking-[0.2em] text-secondary mb-4 block">
+              Core Competencies
+            </span>
+            <h2 className="font-headline text-headline-md text-primary">
+              Precision Infrastructure
+            </h2>
           </div>
-
-          {/* Item 2 */}
-          <div className="md:col-span-4 bg-primary text-on-primary p-10 rounded-xl flex flex-col justify-between overflow-hidden relative">
-            <div className="relative z-10">
-              <span className="material-symbols-outlined text-3xl mb-4">groups</span>
-              <h3 className="font-headline text-2xl mb-2 text-white">Dedicated Agronomy Team</h3>
-            </div>
-            <p className="text-on-primary-container relative z-10">
-              24/7 expert oversight for mission-critical decisions.
-            </p>
-            <div className="absolute -right-10 -bottom-10 opacity-20 transform rotate-12 text-white select-none pointer-events-none">
-              <span className="material-symbols-outlined text-[160px]">diversity_3</span>
-            </div>
-          </div>
-
-          {/* Item 3 */}
-          <div className="md:col-span-5 bg-tertiary-container text-on-tertiary p-10 rounded-xl flex flex-col justify-center gap-4">
-            <span className="material-symbols-outlined text-on-tertiary-container text-3xl">api</span>
-            <h3 className="font-headline text-2xl text-white">Enterprise API Integration</h3>
-            <p className="text-on-tertiary-container/80 text-sm">
-              Seamlessly push field data into SAP, John Deere Operations Center, or custom ERP solutions via our high-throughput REST API.
-            </p>
-          </div>
-
-          {/* Item 4 */}
-          <div className="md:col-span-7 border border-outline-variant rounded-xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
-            <div className="p-10 flex flex-col justify-between">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[280px]">
+            {/* Item 1 */}
+            <div className="md:col-span-8 bg-surface-variant/40 p-10 rounded-lg flex flex-col justify-between group hover:bg-surface-variant transition-all border border-outline-variant/30 reveal">
               <div>
-                <h3 className="font-headline text-2xl mb-2 text-primary">Hardware Fleet Deployment</h3>
-                <p className="text-on-surface-variant text-sm">
-                  Turnkey sensor suites deployed and managed by AetherAg technicians globally.
+                <span className="material-symbols-outlined text-secondary text-4xl mb-4">hub</span>
+                <h3 className="font-headline text-2xl mb-2 text-primary">Multi-Region Tenant Architecture</h3>
+                <p className="text-on-surface-variant max-w-md font-body text-body-md leading-relaxed">
+                  Orchestrate operations across continents with localized data compliance and unified global reporting dashboards.
                 </p>
               </div>
-              <button className="text-secondary font-label text-label-md flex items-center gap-2 font-bold text-left cursor-pointer w-fit hover:opacity-85 transition-opacity">
-                Logistics Portal <span className="material-symbols-outlined text-sm">open_in_new</span>
-              </button>
+              <div className="text-secondary font-label text-label-md flex items-center gap-2 cursor-pointer font-bold hover:underline">
+                View Schema <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              </div>
             </div>
-            <div className="bg-surface-container-high relative overflow-hidden group">
+
+            {/* Item 2 */}
+            <div className="md:col-span-4 bg-primary text-on-primary p-10 rounded-lg flex flex-col justify-between overflow-hidden relative reveal">
+              <div className="relative z-10">
+                <span className="material-symbols-outlined text-on-primary text-3xl mb-4">groups</span>
+                <h3 className="font-headline text-2xl mb-2 text-white">Dedicated Agronomy Team</h3>
+              </div>
+              <p className="text-on-primary-container relative z-10 font-body text-body-md opacity-90 leading-relaxed">
+                24/7 expert oversight for mission-critical decisions and custom soil-remediation plan crafting.
+              </p>
+              <div className="absolute -right-10 -bottom-10 opacity-[0.07] transform rotate-12 text-white select-none pointer-events-none">
+                <span className="material-symbols-outlined text-[160px]">diversity_3</span>
+              </div>
+            </div>
+
+            {/* Item 3 */}
+            <div className="md:col-span-5 bg-surface-variant/40 p-10 rounded-lg flex flex-col justify-center gap-4 border border-outline-variant/30 reveal">
+              <span className="material-symbols-outlined text-secondary text-3xl">api</span>
+              <h3 className="font-headline text-2xl text-primary">Enterprise API Integration</h3>
+              <p className="text-on-surface-variant text-sm font-body leading-relaxed">
+                Seamlessly push field data into SAP, John Deere Operations Center, or custom ERP solutions via our high-throughput REST API.
+              </p>
+            </div>
+
+            {/* Item 4 */}
+            <div className="md:col-span-7 border border-outline-variant/50 rounded-lg overflow-hidden grid grid-cols-1 md:grid-cols-2 reveal">
+              <div className="p-10 flex flex-col justify-between bg-surface-variant/40">
+                <div>
+                  <h3 className="font-headline text-2xl mb-2 text-primary">Hardware Fleet Deployment</h3>
+                  <p className="text-on-surface-variant text-sm font-body leading-relaxed">
+                    Turnkey sensor suites deployed and managed by AetherAg technicians globally.
+                  </p>
+                </div>
+                <button className="text-secondary font-label text-label-md flex items-center gap-2 font-bold text-left cursor-pointer w-fit hover:opacity-85 transition-opacity">
+                  Logistics Portal <span className="material-symbols-outlined text-sm">open_in_new</span>
+                </button>
+              </div>
+              <div className="bg-surface-container relative overflow-hidden group">
+                <img
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  alt="Agricultural sensor installation"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCiA1ohNT9UTsgZWlk3p5sTE9jErhPV149LHGyQzBXRfLEzXl2bi9oow4IYti6xpJO6XpY-OOVt3B-uXLI_fwkq1ry1jrA-8kTO9IWaXUHiELeN4IbqRRDg_Sg3aCtVBPvb--t4QG_StE2WS7Le_y-KvM4FbMuLXLeoSZ5DNO_yyzrVB4UQLOLLL_37S9mzdx-pQtp2l2RAJp3E7g-MRgc1ZbrmCAaUrew3O9mRrXZUgQMaJUNB2M_TSp9AEgsW_yt9f7KXdg_HvY"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Case Studies - Editorial layout with original colors */}
+      <section className="py-24 max-w-container-max mx-auto px-12">
+        <div className="flex justify-between items-end mb-16 reveal">
+          <h2 className="font-headline text-headline-md text-primary">Stewardship in Practice</h2>
+          <a className="font-label text-label-sm uppercase tracking-widest text-on-surface-variant border-b border-outline hover:text-primary transition-colors cursor-pointer pb-1 font-bold">
+            See all case studies
+          </a>
+        </div>
+
+        {/* Mendoza Valley */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center mb-24 reveal">
+          <div className="md:col-span-7">
+            <div className="aspect-[16/9] overflow-hidden rounded-lg shadow-ambient border border-outline-variant/30">
               <img
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                alt="A close-up, high-tech shot of a precision agricultural sensor being installed in a verdant field."
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCiA1ohNT9UTsgZWlk3p5sTE9jErhPV149LHGyQzBXRfLEzXl2bi9oow4IYti6xpJO6XpY-OOVt3B-uXLI_fwkq1ry1jrA-8kTO9IWaXUHiELeN4IbqRRDg_Sg3aCtVBPvb--t4QG_StE2WS7Le_y-KvM4FbMuLXLeoSZ5DNO_yyzrVB4UQLOLLL_37S9mzdx-pQtp2l2RAJp3E7g-MRgc1ZbrmCAaUrew3O9mRrXZUgQMaJUNB2M_TSp9AEgsW_yt9f7KXdg_HvY"
+                className="w-full h-full object-cover grayscale-[0.2] hover:grayscale-0 transition-all duration-700"
+                alt="Mendoza Valley Vineyards"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnROJ0BbwmiCA4LhpwB57HK1h9pEiqVkoDNKYjoy8nmbHun9q6lpoAdUl82krFaYaBtWSzSNIwjIjAtwNFne_N03TKV8rOQcNqhg_D9v_GAUFnctfrjrt3Mbp-4z7Ln-3x2ct2pnyYp8yWdHUsh7epxppumpiZVJFSjt5xSj8wmCg0T8QJ3PmyRqtQPR6IIu50uEixLoEkwU3_uQUHV2I-7LhzUAKVTjkyjY2Bic66XN9ikjasFH1CFH60AUV5k4oatlEyjuXMFF8"
+              />
+            </div>
+          </div>
+          <div className="md:col-span-5">
+            <span className="font-label text-label-sm text-secondary uppercase tracking-widest mb-4 block font-bold">
+              Viticulture
+            </span>
+            <h3 className="font-headline text-3xl mb-6 text-primary">Mendoza Valley Vineyards</h3>
+            <p className="text-on-surface-variant mb-8 leading-relaxed font-body text-body-md">
+              Implementing hyper-local irrigation protocols reduced water consumption by 22% while increasing brix levels across 1,200 hectares of premium Malbec.
+            </p>
+            <div className="flex gap-12 border-t border-outline-variant/50 pt-6">
+              <div>
+                <span className="block font-headline text-3xl text-primary">22%</span>
+                <span className="font-label text-[11px] text-on-surface-variant uppercase tracking-wider font-semibold">Water Saved</span>
+              </div>
+              <div>
+                <span className="block font-headline text-3xl text-primary">4.2x</span>
+                <span className="font-label text-[11px] text-on-surface-variant uppercase tracking-wider font-semibold">ROI Year 1</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Great Plains */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center flex-row-reverse reveal">
+          <div className="md:col-span-5 order-2 md:order-1">
+            <span className="font-label text-label-sm text-secondary uppercase tracking-widest mb-4 block font-bold">
+              Grains &amp; Oilseeds
+            </span>
+            <h3 className="font-headline text-3xl mb-6 text-primary">Great Plains Agricultural Co-op</h3>
+            <p className="text-on-surface-variant mb-8 leading-relaxed font-body text-body-md">
+              A fleet-wide nitrogen management deployment across 45,000 acres, utilizing real-time soil nitrogen sensing to prevent runoff into the Mississippi watershed.
+            </p>
+            <div className="flex gap-12 border-t border-outline-variant/50 pt-6">
+              <div>
+                <span className="block font-headline text-3xl text-primary">140k</span>
+                <span className="font-label text-[11px] text-on-surface-variant uppercase tracking-wider font-semibold">CO2e Credits (mt)</span>
+              </div>
+              <div>
+                <span className="block font-headline text-3xl text-primary">-$1.2M</span>
+                <span className="font-label text-[11px] text-on-surface-variant uppercase tracking-wider font-semibold">Input Costs</span>
+              </div>
+            </div>
+          </div>
+          <div className="md:col-span-7 order-1 md:order-2">
+            <div className="aspect-[16/9] overflow-hidden rounded-lg shadow-ambient border border-outline-variant/30">
+              <img
+                className="w-full h-full object-cover grayscale-[0.2] hover:grayscale-0 transition-all duration-700"
+                alt="Great Plains Grains"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJvENT_IC0g-W_CUchsVt8FGkFpd6Rc42aK2icANf2Da5s9yNSICucbJVuaPlYQsTTnpXmiys81RPIUbTrhTy7PfL3qaiQJoRYPfpM5CLC-MW3FrGCldCW3-BII_-0O1T5bun6gwOouUDiRmPzWLUaJjPuN4SqJ32ClE-OqCAkV5ujr07PUqIc25prCSxQSDugrBKc41eRCcQ3Kb3xG-nkICqphz0QAmDkLcNYDv1CblOTWueOJhshBm7Etux7IfQuZLKR6HSHrzc"
               />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Case Studies */}
-      <section className="py-24 bg-surface-container-lowest">
-        <div className="max-w-[1280px] mx-auto px-8">
-          <div className="flex justify-between items-end mb-16">
-            <h2 className="font-headline text-4xl text-primary">Stewardship in Practice</h2>
-            <a className="font-label text-label-sm uppercase tracking-widest text-on-surface-variant border-b border-outline hover:text-primary transition-colors cursor-pointer pb-1 font-bold">
-              See all case studies
-            </a>
-          </div>
-
-          {/* Mendoza Valley */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center mb-24">
-            <div className="md:col-span-7">
-              <div className="aspect-[16/9] overflow-hidden rounded-sm grayscale hover:grayscale-0 transition-all duration-700">
-                <img
-                  className="w-full h-full object-cover"
-                  alt="A high-contrast, artistic aerial photograph of a sprawling vineyard in the Mendoza Valley."
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnROJ0BbwmiCA4LhpwB57HK1h9pEiqVkoDNKYjoy8nmbHun9q6lpoAdUl82krFaYaBtWSzSNIwjIjAtwNFne_N03TKV8rOQcNqhg_D9v_GAUFnctfrjrt3Mbp-4z7Ln-3x2ct2pnyYp8yWdHUsh7epxppumpiZVJFSjt5xSj8wmCg0T8QJ3PmyRqtQPR6IIu50uEixLoEkwU3_uQUHV2I-7LhzUAKVTjkyjY2Bic66XN9ikjasFH1CFH60AUV5k4oatlEyjuXMFF8"
-                />
-              </div>
-            </div>
-            <div className="md:col-span-5">
-              <span className="font-label text-label-sm text-secondary uppercase tracking-widest mb-4 block font-bold">
-                Viticulture
-              </span>
-              <h3 className="font-headline text-3xl mb-6 text-primary">Mendoza Valley Vineyards</h3>
-              <p className="text-on-surface-variant mb-8 leading-relaxed">
-                Implementing hyper-local irrigation protocols reduced water consumption by 22% while increasing brix levels across 1,200 hectares of premium Malbec.
-              </p>
-              <div className="flex gap-12 border-t border-outline-variant pt-6">
-                <div>
-                  <span className="block font-headline text-2xl text-primary">{`22%`}</span>
-                  <span className="font-label text-label-sm text-on-surface-variant uppercase tracking-tighter">Water Saved</span>
-                </div>
-                <div>
-                  <span className="block font-headline text-2xl text-primary">{`4.2x`}</span>
-                  <span className="font-label text-label-sm text-on-surface-variant uppercase tracking-tighter">ROI Year 1</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Great Plains */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center flex-row-reverse">
-            <div className="md:col-span-5 order-2 md:order-1">
-              <span className="font-label text-label-sm text-secondary uppercase tracking-widest mb-4 block font-bold">
-                Grains &amp; Oilseeds
-              </span>
-              <h3 className="font-headline text-3xl mb-6 text-primary">Great Plains Agricultural Co-op</h3>
-              <p className="text-on-surface-variant mb-8 leading-relaxed">
-                A fleet-wide nitrogen management deployment across 45,000 acres, utilizing real-time soil nitrogen sensing to prevent runoff into the Mississippi watershed.
-              </p>
-              <div className="flex gap-12 border-t border-outline-variant pt-6">
-                <div>
-                  <span className="block font-headline text-2xl text-primary">{`140k`}</span>
-                  <span className="font-label text-label-sm text-on-surface-variant uppercase tracking-tighter">CO2e Credits</span>
-                </div>
-                <div>
-                  <span className="block font-headline text-2xl text-primary">{`-$1.2M`}</span>
-                  <span className="font-label text-label-sm text-on-surface-variant uppercase tracking-tighter">Input Costs</span>
-                </div>
-              </div>
-            </div>
-            <div className="md:col-span-7 order-1 md:order-2">
-              <div className="aspect-[16/9] overflow-hidden rounded-sm grayscale hover:grayscale-0 transition-all duration-700">
-                <img
-                  className="w-full h-full object-cover"
-                  alt="A wide macro photograph of a vast wheat field stretching to the horizon under a pale, high-key sky."
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJvENT_IC0g-W_CUchsVt8FGkFpd6Rc42aK2icANf2Da5s9yNSICucbJVuaPlYQsTTnpXmiys81RPIUbTrhTy7PfL3qaiQJoRYPfpM5CLC-MW3FrGCldCW3-BII_-0O1T5bun6gwOouUDiRmPzWLUaJjPuN4SqJ32ClE-OqCAkV5ujr07PUqIc25prCSxQSDugrBKc41eRCcQ3Kb3xG-nkICqphz0QAmDkLcNYDv1CblOTWueOJhshBm7Etux7IfQuZLKR6HSHrzc"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ROI & Stewardship Calculator */}
-      <section className="py-24 bg-surface" id="calculator">
-        <div className="max-w-[1280px] mx-auto px-8">
+      {/* ROI & Stewardship Calculator - Tactile & Laboratory styled */}
+      <section className="bg-surface-container-low py-xl border-y border-outline-variant/20" id="calculator">
+        <div className="max-w-container-max mx-auto px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             {/* Inputs Panel */}
-            <div className="bg-white p-12 rounded-xl shadow-sm border border-outline-variant/30">
+            <div className="bg-background p-10 md:p-12 rounded-lg border border-outline-variant/40 shadow-ambient reveal">
               <h2 className="font-headline text-3xl mb-8 text-primary">Stewardship Impact Calculator</h2>
               <div className="space-y-10">
                 {/* Land Area */}
                 <div>
-                  <div className="flex justify-between mb-4">
+                  <div className="flex justify-between mb-4 font-body">
                     <label className="font-label text-label-md uppercase tracking-wider text-on-surface-variant">
                       Total Land Area (Hectares)
                     </label>
-                    <span className="font-headline text-xl text-primary font-bold" id="hectares-val">
+                    <span className="font-headline text-xl text-primary font-bold">
                       {hectares.toLocaleString()}
                     </span>
                   </div>
@@ -321,7 +320,7 @@ export default function Enterprise() {
                     step="100"
                     value={hectares}
                     onChange={(e) => setHectares(parseInt(e.target.value))}
-                    className="w-full"
+                    className="w-full cursor-pointer"
                   />
                 </div>
 
@@ -333,9 +332,9 @@ export default function Enterprise() {
                   <div className="grid grid-cols-2 gap-4">
                     <button
                       onClick={() => setCropType("grains")}
-                      className={`crop-btn px-4 py-3 border rounded font-label text-label-md cursor-pointer transition-all ${
+                      className={`px-4 py-3 border rounded font-label text-label-md cursor-pointer transition-all ${
                         cropType === "grains"
-                          ? "active border-secondary bg-secondary/5 text-secondary font-bold"
+                          ? "border-secondary bg-secondary/5 text-secondary font-bold"
                           : "border-outline-variant hover:border-secondary text-on-surface-variant"
                       }`}
                     >
@@ -343,9 +342,9 @@ export default function Enterprise() {
                     </button>
                     <button
                       onClick={() => setCropType("perennials")}
-                      className={`crop-btn px-4 py-3 border rounded font-label text-label-md cursor-pointer transition-all ${
+                      className={`px-4 py-3 border rounded font-label text-label-md cursor-pointer transition-all ${
                         cropType === "perennials"
-                          ? "active border-secondary bg-secondary/5 text-secondary font-bold"
+                          ? "border-secondary bg-secondary/5 text-secondary font-bold"
                           : "border-outline-variant hover:border-secondary text-on-surface-variant"
                       }`}
                     >
@@ -356,11 +355,11 @@ export default function Enterprise() {
 
                 {/* Annual Input Spend */}
                 <div>
-                  <div className="flex justify-between mb-4">
+                  <div className="flex justify-between mb-4 font-body">
                     <label className="font-label text-label-md uppercase tracking-wider text-on-surface-variant">
                       Annual Input Spend ($/Ha)
                     </label>
-                    <span className="font-headline text-xl text-primary font-bold" id="spend-val">
+                    <span className="font-headline text-xl text-primary font-bold">
                       ${spend.toLocaleString()}
                     </span>
                   </div>
@@ -372,15 +371,15 @@ export default function Enterprise() {
                     step="10"
                     value={spend}
                     onChange={(e) => setSpend(parseInt(e.target.value))}
-                    className="w-full"
+                    className="w-full cursor-pointer"
                   />
                 </div>
               </div>
             </div>
 
             {/* Outputs Panel */}
-            <div className="lg:sticky lg:top-32">
-              <div className="bg-primary text-white p-12 rounded-xl shadow-ambient">
+            <div className="lg:sticky lg:top-32 reveal">
+              <div className="bg-primary text-white p-10 md:p-12 rounded-lg shadow-ambient">
                 <h3 className="font-label text-label-sm uppercase tracking-[0.3em] text-on-primary-container mb-8">
                   Estimated Enterprise Yield
                 </h3>
@@ -390,7 +389,7 @@ export default function Enterprise() {
                       Projected Annual Savings
                     </span>
                     <div className="flex items-baseline gap-2">
-                      <span className="font-headline text-5xl text-white font-bold" id="out-savings">
+                      <span className="font-headline text-4xl md:text-5xl text-white font-bold">
                         ${savings.toLocaleString()}
                       </span>
                       <span className="text-secondary-fixed text-lg font-bold">USD</span>
@@ -401,7 +400,7 @@ export default function Enterprise() {
                       <span className="text-on-primary-container font-label text-label-sm uppercase tracking-widest block mb-2">
                         Carbon Offset (mt)
                       </span>
-                      <span className="font-headline text-2xl text-white font-bold" id="out-carbon">
+                      <span className="font-headline text-2xl text-white font-bold animate-pulse-slow">
                         {carbon.toLocaleString()}
                       </span>
                     </div>
@@ -409,16 +408,16 @@ export default function Enterprise() {
                       <span className="text-on-primary-container font-label text-label-sm uppercase tracking-widest block mb-2">
                         Payback Period
                       </span>
-                      <span className="font-headline text-2xl text-white font-bold" id="out-payback">
+                      <span className="font-headline text-2xl text-white font-bold">
                         {payback} Months
                       </span>
                     </div>
                   </div>
                   <div className="pt-8">
-                    <p className="text-sm text-on-primary-container italic mb-6">
+                    <p className="text-xs text-on-primary-container italic mb-6">
                       Calculations based on 15% efficiency gain benchmarks from AetherAg global deployments.
                     </p>
-                    <button className="w-full py-4 bg-secondary hover:bg-on-secondary-container transition-colors rounded-lg font-label text-label-md tracking-widest cursor-pointer font-bold border-0 text-white">
+                    <button className="w-full py-4 bg-secondary text-white hover:bg-opacity-90 transition-all rounded font-label text-label-md tracking-widest cursor-pointer font-bold border-0">
                       DOWNLOAD FULL IMPACT REPORT
                     </button>
                   </div>
@@ -430,13 +429,10 @@ export default function Enterprise() {
       </section>
 
       {/* Sales Intake Form */}
-      <section
-        id="contact"
-        className="py-24 bg-surface-container-high border-t border-outline-variant"
-      >
-        <div className="max-w-[800px] mx-auto px-8">
+      <section id="contact" className="py-24 max-w-container-max mx-auto px-12">
+        <div className="max-w-[800px] mx-auto reveal">
           <div className="text-center mb-16">
-            <h2 className="font-headline text-4xl mb-4 text-primary">
+            <h2 className="font-headline text-headline-md mb-4 text-primary">
               Inquire for Enterprise Deployment
             </h2>
             <p className="text-on-surface-variant font-body text-body-md">
@@ -445,12 +441,12 @@ export default function Enterprise() {
           </div>
 
           {formSubmitted ? (
-            <div className="bg-surface-container-lowest p-8 rounded-lg border border-secondary/20 shadow-ambient text-center animate-fade-in">
+            <div className="bg-surface-container p-8 rounded-lg border border-secondary/20 shadow-ambient text-center animate-fade-in">
               <span className="material-symbols-outlined text-secondary text-5xl mb-4">
                 check_circle
               </span>
               <h3 className="font-headline text-2xl mb-2 text-primary">Inquiry Initialized</h3>
-              <p className="text-on-surface-variant font-body text-body-md max-w-md mx-auto">
+              <p className="text-on-surface-variant font-body text-body-md max-w-md mx-auto leading-relaxed">
                 Thank you, <strong>{formData.name}</strong>. Our corporate solutions agronomy team will review your parameters for the <strong>{formData.enterprise}</strong> holdings and contact you at <strong>{formData.email}</strong> within 24 hours.
               </p>
             </div>
@@ -541,7 +537,7 @@ export default function Enterprise() {
                   value={formData.challenge}
                   onChange={handleInputChange}
                   placeholder=" "
-                  className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none resize-none"
+                  className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none resize-none font-body text-body-md"
                 />
                 <label
                   htmlFor="challenge"
@@ -554,7 +550,7 @@ export default function Enterprise() {
               <div className="pt-6">
                 <button
                   type="submit"
-                  className="w-full bg-primary text-white py-5 rounded-lg font-label text-label-md tracking-[0.3em] uppercase hover:bg-primary-container transition-all cursor-pointer font-bold border-0"
+                  className="w-full bg-primary text-white py-5 rounded font-label text-label-md tracking-[0.3em] uppercase hover:bg-secondary transition-all cursor-pointer font-bold border-0"
                 >
                   Initialize Inquiry
                 </button>
@@ -564,47 +560,31 @@ export default function Enterprise() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="w-full mt-auto bg-surface-container-high border-t border-outline-variant">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-8 py-12 max-w-[1280px] mx-auto">
+      {/* Footer styled to match AetherAg's warm organic tones */}
+      <footer className="w-full mt-auto bg-surface-container border-t border-outline-variant/30">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-12 py-12 max-w-container-max mx-auto">
           <div>
             <div className="font-headline text-headline-sm text-primary mb-4">AetherAg</div>
             <p className="font-body text-body-md text-on-surface-variant max-w-sm mb-6">
-              © 2024 AetherAg. Sustainable precision for a growing world.
+              © 2026 AetherAg Precision Systems. Sustainable precision for a growing world.
             </p>
             <div className="flex gap-6">
-              <a className="text-on-surface-variant hover:text-secondary transition-colors" href="#">
-                <span className="material-symbols-outlined">public</span>
-              </a>
-              <a className="text-on-surface-variant hover:text-secondary transition-colors" href="#">
-                <span className="material-symbols-outlined">share</span>
-              </a>
-              <a className="text-on-surface-variant hover:text-secondary transition-colors" href="#">
-                <span className="material-symbols-outlined">mail</span>
-              </a>
+              <span className="material-symbols-outlined text-on-surface-variant hover:text-secondary cursor-pointer">public</span>
+              <span className="material-symbols-outlined text-on-surface-variant hover:text-secondary cursor-pointer">share</span>
+              <span className="material-symbols-outlined text-on-surface-variant hover:text-secondary cursor-pointer">mail</span>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <h4 className="font-label text-label-sm uppercase tracking-widest text-primary mb-4">Legal</h4>
-              <a className="block text-on-surface-variant/70 hover:text-secondary text-sm" href="#">
-                Terms of Service
-              </a>
-              <a className="block text-on-surface-variant/70 hover:text-secondary text-sm" href="#">
-                Privacy Policy
-              </a>
+              <span className="block text-on-surface-variant/70 hover:text-secondary text-sm cursor-pointer">Terms of Service</span>
+              <span className="block text-on-surface-variant/70 hover:text-secondary text-sm cursor-pointer">Privacy Policy</span>
             </div>
             <div className="space-y-2">
               <h4 className="font-label text-label-sm uppercase tracking-widest text-primary mb-4">Resources</h4>
-              <a className="block text-on-surface-variant/70 hover:text-secondary text-sm" href="#">
-                Sustainability Report
-              </a>
-              <a className="block text-on-surface-variant/70 hover:text-secondary text-sm" href="#">
-                Research Archive
-              </a>
-              <a className="block text-on-surface-variant/70 hover:text-secondary text-sm" href="#">
-                Contact Support
-              </a>
+              <span className="block text-on-surface-variant/70 hover:text-secondary text-sm cursor-pointer">Sustainability Report</span>
+              <span className="block text-on-surface-variant/70 hover:text-secondary text-sm cursor-pointer">Research Archive</span>
+              <span className="block text-on-surface-variant/70 hover:text-secondary text-sm cursor-pointer">Contact Support</span>
             </div>
           </div>
         </div>
