@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Enterprise Solutions | AetherAg</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Hanken+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary": "#3b6934",
+                      "tertiary-container": "#241a0e",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-fixed-dim": "#d7c3b0",
+                      "on-secondary-fixed-variant": "#23501e",
+                      "inverse-primary": "#c9c6c5",
+                      "surface-container-high": "#e8e8e6",
+                      "on-tertiary-container": "#928170",
+                      "inverse-surface": "#2f3130",
+                      "surface": "#f9f9f7",
+                      "surface-tint": "#5f5e5e",
+                      "surface-variant": "#e2e3e1",
+                      "on-secondary-container": "#3f6d38",
+                      "on-secondary": "#ffffff",
+                      "outline-variant": "#c4c7c7",
+                      "secondary-fixed-dim": "#a1d494",
+                      "on-surface-variant": "#444748",
+                      "on-error": "#ffffff",
+                      "surface-container": "#eeeeec",
+                      "secondary-fixed": "#bcf0ae",
+                      "tertiary": "#000000",
+                      "surface-container-low": "#f4f4f2",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-bright": "#f9f9f7",
+                      "primary-container": "#1c1b1b",
+                      "primary-fixed-dim": "#c9c6c5",
+                      "on-error-container": "#93000a",
+                      "on-primary-fixed": "#1c1b1b",
+                      "on-tertiary-fixed-variant": "#524436",
+                      "error": "#ba1a1a",
+                      "primary-fixed": "#e5e2e1",
+                      "on-primary-fixed-variant": "#474646",
+                      "on-primary-container": "#858383",
+                      "on-primary": "#ffffff",
+                      "background": "#f9f9f7",
+                      "outline": "#747878",
+                      "on-background": "#1a1c1b",
+                      "surface-dim": "#dadad8",
+                      "error-container": "#ffdad6",
+                      "surface-container-highest": "#e2e3e1",
+                      "on-tertiary-fixed": "#241a0e",
+                      "on-surface": "#1a1c1b",
+                      "secondary-container": "#b9eeab",
+                      "inverse-on-surface": "#f1f1ef",
+                      "on-secondary-fixed": "#002201",
+                      "tertiary-fixed": "#f4dfcb",
+                      "primary": "#000000"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "fontFamily": {
+                      "headline": ["Libre Caslon Text"],
+                      "display": ["Libre Caslon Text"],
+                      "body": ["Hanken Grotesk"],
+                      "label": ["Hanken Grotesk"]
+              }
+            },
+          }
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .text-ink { color: #1a1c1b; }
+        .bg-canvas { background-color: #f9f9f7; }
+        .font-headline { font-family: 'Libre Caslon Text', serif; }
+        .font-body { font-family: 'Hanken Grotesk', sans-serif; }
+        
+        /* Custom Calculator Slider Styling */
+        input[type=range] {
+          -webkit-appearance: none;
+          background: transparent;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+          width: 100%;
+          height: 2px;
+          background: #c4c7c7;
+        }
+        input[type=range]::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          height: 16px;
+          width: 16px;
+          border-radius: 50%;
+          background: #3b6934;
+          cursor: pointer;
+          margin-top: -7px;
+        }
+      </style>
+</head>
+<body class="bg-canvas text-on-surface font-body selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- TopNavBar -->
+<header class="w-full top-0 sticky bg-surface z-50 border-b border-outline-variant/30">
+<nav class="flex justify-between items-center px-8 py-4 max-w-[1280px] mx-auto">
+<div class="font-headline text-headline-md font-bold text-primary">AetherAg</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-label text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Platform</a>
+<a class="font-label text-label-md text-primary font-bold border-b-2 border-primary pb-1" href="#">Precision Data</a>
+<a class="font-label text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Stewardship</a>
+<a class="font-label text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Research</a>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-lg font-label text-label-md hover:bg-primary-container transition-all cursor-pointer">
+                Get Started
+            </button>
+</nav>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-[870px] flex items-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover grayscale-[20%] brightness-75" data-alt="A wide cinematic landscape of a rolling wheat field under a dramatic, moody sunset with long shadows. The lighting is sophisticated and editorial, emphasizing the vastness and precision of the landscape. The atmosphere is professional and authoritative, utilizing a palette of deep earth tones and sharp contrasts to reflect enterprise-level agricultural stewardship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCafbcLz68qPrd_myoh8b5tpsP5mdezQQD9zWS8cLO5hxPk-6ephD4agIPn-LFfO5ziCu-h3gMTrNDItUpJETjSYJU4u9G0fqEylr3T16yPAIR2JR1vRFPDk4MQpT2XdGqr_Mbw4Fji--emrL_qoDfatTGMlaYKG0hIWY7Q6wC0cs7iIhVpYHR_Ax2aXXtQU0RQXOSetlvnbI8u7OybXGxe01uqCk6XIfjuTB87l2YW48aaN--au546HSvTcO3gxb9tBEgqPvi07pk"/>
+</div>
+<div class="relative z-10 max-w-[1280px] mx-auto px-8 w-full">
+<div class="max-w-3xl">
+<h1 class="font-headline text-[56px] leading-[1.1] text-white mb-6">
+                        Planetary Stewardship at Enterprise Scale
+                    </h1>
+<p class="font-body text-xl text-white/90 mb-10 max-w-xl">
+                        AetherAg empowers multinational agricultural enterprises to synchronize yields with ecological restoration. High-resolution data for a high-stakes future.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="bg-secondary text-on-secondary px-8 py-4 rounded-lg font-label text-label-md tracking-wider flex items-center justify-center gap-2 hover:bg-on-secondary-container transition-colors" href="#calculator">
+                            LAUNCH ROI CALCULATOR
+                        </a>
+<a class="bg-white/10 backdrop-blur-md border border-white/30 text-white px-8 py-4 rounded-lg font-label text-label-md tracking-wider text-center hover:bg-white/20 transition-colors" href="#contact">
+                            CONSULT AN AGRONOMIST
+                        </a>
+</div>
+</div>
+</div>
+<div class="absolute bottom-10 right-10 text-white/40 flex items-center gap-4">
+<span class="text-xs font-label tracking-widest uppercase">Scroll to explore</span>
+<div class="w-px h-12 bg-white/40"></div>
+</div>
+</section>
+<!-- Capabilities Bento Grid -->
+<section class="py-24 max-w-[1280px] mx-auto px-8">
+<div class="mb-16">
+<span class="font-label text-label-sm uppercase tracking-[0.2em] text-secondary mb-4 block">Core Competencies</span>
+<h2 class="font-headline text-4xl text-on-surface">Precision Infrastructure</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[280px]">
+<!-- Item 1 -->
+<div class="md:col-span-8 bg-surface-container-low p-10 rounded-xl flex flex-col justify-between group hover:bg-surface-container transition-all">
+<div>
+<span class="material-symbols-outlined text-secondary text-4xl mb-4">hub</span>
+<h3 class="font-headline text-2xl mb-2">Multi-Region Tenant Architecture</h3>
+<p class="text-on-surface-variant max-w-md">Orchestrate operations across continents with localized data compliance and unified global reporting dashboards.</p>
+</div>
+<div class="text-secondary font-label text-label-md flex items-center gap-2 cursor-pointer">
+                        View Schema <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="md:col-span-4 bg-primary text-on-primary p-10 rounded-xl flex flex-col justify-between overflow-hidden relative">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-3xl mb-4">groups</span>
+<h3 class="font-headline text-2xl mb-2 text-white">Dedicated Agronomy Team</h3>
+</div>
+<p class="text-on-primary-container relative z-10">24/7 expert oversight for mission-critical decisions.</p>
+<div class="absolute -right-10 -bottom-10 opacity-20 transform rotate-12">
+<span class="material-symbols-outlined text-[160px]">diversity_3</span>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="md:col-span-5 bg-tertiary-container text-on-tertiary p-10 rounded-xl flex flex-col justify-center gap-4">
+<span class="material-symbols-outlined text-on-tertiary-container text-3xl">api</span>
+<h3 class="font-headline text-2xl">Enterprise API Integration</h3>
+<p class="text-on-tertiary-container/80 text-sm">Seamlessly push field data into SAP, John Deere Operations Center, or custom ERP solutions via our high-throughput REST API.</p>
+</div>
+<!-- Item 4 -->
+<div class="md:col-span-7 border border-outline-variant rounded-xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
+<div class="p-10 flex flex-col justify-between">
+<div>
+<h3 class="font-headline text-2xl mb-2">Hardware Fleet Deployment</h3>
+<p class="text-on-surface-variant text-sm">Turnkey sensor suites deployed and managed by AetherAg technicians globally.</p>
+</div>
+<button class="text-secondary font-label text-label-md flex items-center gap-2">Logistics Portal <span class="material-symbols-outlined text-sm">open_in_new</span></button>
+</div>
+<div class="bg-surface-container-high relative">
+<img class="w-full h-full object-cover" data-alt="A close-up, high-tech shot of a precision agricultural sensor being installed in a verdant field. The lighting is clean and laboratory-like, emphasizing the industrial design and sophisticated technology of the hardware. The focus is sharp on the metallic and glass components of the device against a soft, organic green background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCiA1ohNT9UTsgZWlk3p5sTE9jErhPV149LHGyQzBXRfLEzXl2bi9oow4IYti6xpJO6XpY-OOVt3B-uXLI_fwkq1ry1jrA-8kTO9IWaXUHiELeN4IbqRRDg_Sg3aCtVBPvb--t4QG_StE2WS7Le_y-KvM4FbMuLXLeoSZ5DNO_yyzrVB4UQLOLLL_37S9mzdx-pQtp2l2RAJp3E7g-MRgc1ZbrmCAaUrew3O9mRrXZUgQMaJUNB2M_TSp9AEgsW_yt9f7KXdg_HvY"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Case Studies -->
+<section class="py-24 bg-surface-container-lowest">
+<div class="max-w-[1280px] mx-auto px-8">
+<div class="flex justify-between items-end mb-16">
+<h2 class="font-headline text-4xl">Stewardship in Practice</h2>
+<a class="font-label text-label-sm uppercase tracking-widest text-on-surface-variant border-b border-outline hover:text-primary transition-colors" href="#">See all case studies</a>
+</div>
+<!-- Mendoza Valley -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center mb-24">
+<div class="md:col-span-7">
+<div class="aspect-[16/9] overflow-hidden rounded-sm grayscale hover:grayscale-0 transition-all duration-700">
+<img class="w-full h-full object-cover" data-alt="A high-contrast, artistic aerial photograph of a sprawling vineyard in the Mendoza Valley. The rows of vines create a mesmerizing geometric pattern against the dry, silty earth. The lighting is harsh afternoon sun, creating deep shadows that emphasize the texture and topographical precision of the land. The aesthetic is editorial and sophisticated." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnROJ0BbwmiCA4LhpwB57HK1h9pEiqVkoDNKYjoy8nmbHun9q6lpoAdUl82krFaYaBtWSzSNIwjIjAtwNFne_N03TKV8rOQcNqhg_D9v_GAUFnctfrjrt3Mbp-4z7Ln-3x2ct2pnyYp8yWdHUsh7epxppumpiZVJFSjt5xSj8wmCg0T8QJ3PmyRqtQPR6IIu50uEixLoEkwU3_uQUHV2I-7LhzUAKVTjkyjY2Bic66XN9ikjasFH1CFH60AUV5k4oatlEyjuXMFF8"/>
+</div>
+</div>
+<div class="md:col-span-5">
+<span class="font-label text-label-sm text-secondary uppercase tracking-widest mb-4 block">Viticulture</span>
+<h3 class="font-headline text-3xl mb-6">Mendoza Valley Vineyards</h3>
+<p class="text-on-surface-variant mb-8 leading-relaxed">Implementing hyper-local irrigation protocols reduced water consumption by 22% while increasing brix levels across 1,200 hectares of premium Malbec.</p>
+<div class="flex gap-12 border-t border-outline-variant pt-6">
+<div>
+<span class="block font-headline text-2xl">22%</span>
+<span class="font-label text-label-sm text-on-surface-variant uppercase tracking-tighter">Water Saved</span>
+</div>
+<div>
+<span class="block font-headline text-2xl">4.2x</span>
+<span class="font-label text-label-sm text-on-surface-variant uppercase tracking-tighter">ROI Year 1</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Great Plains -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center flex-row-reverse">
+<div class="md:col-span-5 order-2 md:order-1">
+<span class="font-label text-label-sm text-secondary uppercase tracking-widest mb-4 block">Grains &amp; Oilseeds</span>
+<h3 class="font-headline text-3xl mb-6">Great Plains Agricultural Co-op</h3>
+<p class="text-on-surface-variant mb-8 leading-relaxed">A fleet-wide nitrogen management deployment across 45,000 acres, utilizing real-time soil nitrogen sensing to prevent runoff into the Mississippi watershed.</p>
+<div class="flex gap-12 border-t border-outline-variant pt-6">
+<div>
+<span class="block font-headline text-2xl">140k</span>
+<span class="font-label text-label-sm text-on-surface-variant uppercase tracking-tighter">CO2e Credits</span>
+</div>
+<div>
+<span class="block font-headline text-2xl">-$1.2M</span>
+<span class="font-label text-label-sm text-on-surface-variant uppercase tracking-tighter">Input Costs</span>
+</div>
+</div>
+</div>
+<div class="md:col-span-7 order-1 md:order-2">
+<div class="aspect-[16/9] overflow-hidden rounded-sm grayscale hover:grayscale-0 transition-all duration-700">
+<img class="w-full h-full object-cover" data-alt="A wide macro photograph of a vast wheat field stretching to the horizon under a pale, high-key sky. The individual heads of wheat are sharp and detailed in the foreground, showing the biological complexity of the crop. The lighting is soft and even, suggesting a bright morning in the Great Plains, conveying a sense of abundance and technical reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJvENT_IC0g-W_CUchsVt8FGkFpd6Rc42aK2icANf2Da5s9yNSICucbJVuaPlYQsTTnpXmiys81RPIUbTrhTy7PfL3qaiQJoRYPfpM5CLC-MW3FrGCldCW3-BII_-0O1T5bun6gwOouUDiRmPzWLUaJjPuN4SqJ32ClE-OqCAkV5ujr07PUqIc25prCSxQSDugrBKc41eRCcQ3Kb3xG-nkICqphz0QAmDkLcNYDv1CblOTWueOJhshBm7Etux7IfQuZLKR6HSHrzc"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ROI & Stewardship Calculator -->
+<section class="py-24 bg-surface" id="calculator">
+<div class="max-w-[1280px] mx-auto px-8">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+<div class="bg-white p-12 rounded-xl shadow-sm border border-outline-variant/30">
+<h2 class="font-headline text-3xl mb-8">Stewardship Impact Calculator</h2>
+<div class="space-y-10">
+<!-- Land Area -->
+<div>
+<div class="flex justify-between mb-4">
+<label class="font-label text-label-md uppercase tracking-wider">Total Land Area (Hectares)</label>
+<span class="font-headline text-xl" id="hectares-val">5,000</span>
+</div>
+<input class="w-full" id="hectares" max="50000" min="100" step="100" type="range" value="5000"/>
+</div>
+<!-- Crop Type -->
+<div>
+<label class="font-label text-label-md uppercase tracking-wider mb-4 block">Crop System</label>
+<div class="grid grid-cols-2 gap-4">
+<button class="crop-btn active px-4 py-3 border border-secondary bg-secondary/5 text-secondary rounded font-label text-label-md" onclick="updateCrop('grains', this)">Grains &amp; Corn</button>
+<button class="crop-btn px-4 py-3 border border-outline-variant hover:border-secondary transition-all rounded font-label text-label-md" onclick="updateCrop('perennials', this)">Perennials &amp; Orchards</button>
+</div>
+</div>
+<!-- Annual Fertilizer Cost -->
+<div>
+<div class="flex justify-between mb-4">
+<label class="font-label text-label-md uppercase tracking-wider">Annual Input Spend ($/Ha)</label>
+<span class="font-headline text-xl" id="spend-val">$450</span>
+</div>
+<input class="w-full" id="spend" max="2000" min="50" step="10" type="range" value="450"/>
+</div>
+</div>
+</div>
+<div class="lg:sticky lg:top-32">
+<div class="bg-primary text-white p-12 rounded-xl">
+<h3 class="font-label text-label-sm uppercase tracking-[0.3em] text-on-primary-container mb-8">Estimated Enterprise Yield</h3>
+<div class="space-y-12">
+<div>
+<span class="text-on-primary-container font-label text-label-sm uppercase tracking-widest block mb-2">Projected Annual Savings</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline text-5xl" id="out-savings">$337,500</span>
+<span class="text-secondary-fixed text-lg font-bold">USD</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-8 pt-8 border-t border-white/10">
+<div>
+<span class="text-on-primary-container font-label text-label-sm uppercase tracking-widest block mb-2">Carbon Offset (mt)</span>
+<span class="font-headline text-2xl" id="out-carbon">2,150</span>
+</div>
+<div>
+<span class="text-on-primary-container font-label text-label-sm uppercase tracking-widest block mb-2">Payback Period</span>
+<span class="font-headline text-2xl" id="out-payback">14 Months</span>
+</div>
+</div>
+<div class="pt-8">
+<p class="text-sm text-on-primary-container italic mb-6">Calculations based on 15% efficiency gain benchmarks from AetherAg global deployments.</p>
+<button class="w-full py-4 bg-secondary hover:bg-on-secondary-container transition-colors rounded-lg font-label text-label-md tracking-widest">DOWNLOAD FULL IMPACT REPORT</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Sales Intake -->
+<section class="py-24 bg-surface-container-high border-t border-outline-variant" id="contact">
+<div class="max-w-[800px] mx-auto px-8">
+<div class="text-center mb-16">
+<h2 class="font-headline text-4xl mb-4">Inquire for Enterprise Deployment</h2>
+<p class="text-on-surface-variant font-body">Connect with our strategic solutions team to discuss fleet integration.</p>
+</div>
+<form class="space-y-12">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+<div class="relative">
+<input class="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all" id="name" placeholder=" " type="text"/>
+<label class="absolute left-0 top-3 text-on-surface-variant/60 font-label text-label-md uppercase tracking-wider transform -translate-y-6 scale-75 origin-top-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 transition-all" for="name">Full Name</label>
+</div>
+<div class="relative">
+<input class="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all" id="enterprise" placeholder=" " type="text"/>
+<label class="absolute left-0 top-3 text-on-surface-variant/60 font-label text-label-md uppercase tracking-wider transform -translate-y-6 scale-75 origin-top-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 transition-all" for="enterprise">Enterprise Entity</label>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+<div class="relative">
+<input class="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all" id="hectares_form" placeholder=" " type="number"/>
+<label class="absolute left-0 top-3 text-on-surface-variant/60 font-label text-label-md uppercase tracking-wider transform -translate-y-6 scale-75 origin-top-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 transition-all" for="hectares_form">Total Hectares</label>
+</div>
+<div class="relative">
+<input class="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all" id="email" placeholder=" " type="email"/>
+<label class="absolute left-0 top-3 text-on-surface-variant/60 font-label text-label-md uppercase tracking-wider transform -translate-y-6 scale-75 origin-top-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 transition-all" for="email">Corporate Email</label>
+</div>
+</div>
+<div class="relative">
+<textarea class="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all" id="challenge" placeholder=" " rows="3"></textarea>
+<label class="absolute left-0 top-3 text-on-surface-variant/60 font-label text-label-md uppercase tracking-wider transform -translate-y-6 scale-75 origin-top-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 transition-all" for="challenge">Primary Operational Challenge</label>
+</div>
+<div class="pt-6">
+<button class="w-full bg-primary text-white py-5 rounded-lg font-label text-label-md tracking-[0.3em] uppercase hover:bg-primary-container transition-all" type="submit">Initialize Inquiry</button>
+</div>
+</form>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full mt-auto bg-surface-container-high">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 px-8 py-12 max-w-[1280px] mx-auto border-t border-outline-variant">
+<div>
+<div class="font-headline text-headline-sm text-primary mb-4">AetherAg</div>
+<p class="font-body text-body-md text-on-surface-variant max-w-sm mb-6">© 2024 AetherAg. Sustainable precision for a growing world.</p>
+<div class="flex gap-6">
+<a class="text-on-surface-variant hover:text-secondary transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors" href="#"><span class="material-symbols-outlined">share</span></a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors" href="#"><span class="material-symbols-outlined">mail</span></a>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<h4 class="font-label text-label-sm uppercase tracking-widest text-primary mb-4">Legal</h4>
+<a class="block text-on-surface-variant/70 hover:text-secondary text-sm" href="#">Terms of Service</a>
+<a class="block text-on-surface-variant/70 hover:text-secondary text-sm" href="#">Privacy Policy</a>
+</div>
+<div class="space-y-2">
+<h4 class="font-label text-label-sm uppercase tracking-widest text-primary mb-4">Resources</h4>
+<a class="block text-on-surface-variant/70 hover:text-secondary text-sm" href="#">Sustainability Report</a>
+<a class="block text-on-surface-variant/70 hover:text-secondary text-sm" href="#">Research Archive</a>
+<a class="block text-on-surface-variant/70 hover:text-secondary text-sm" href="#">Contact Support</a>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        // Calculator Logic
+        const hectaresInp = document.getElementById('hectares');
+        const spendInp = document.getElementById('spend');
+        const hectaresVal = document.getElementById('hectares-val');
+        const spendVal = document.getElementById('spend-val');
+        
+        const outSavings = document.getElementById('out-savings');
+        const outCarbon = document.getElementById('out-carbon');
+        const outPayback = document.getElementById('out-payback');
+
+        let currentCropFactor = 1.0;
+
+        function updateCrop(type, btn) {
+            document.querySelectorAll('.crop-btn').forEach(b => {
+                b.classList.remove('active', 'border-secondary', 'bg-secondary/5', 'text-secondary');
+                b.classList.add('border-outline-variant');
+            });
+            btn.classList.add('active', 'border-secondary', 'bg-secondary/5', 'text-secondary');
+            btn.classList.remove('border-outline-variant');
+            
+            currentCropFactor = type === 'grains' ? 1.0 : 1.45;
+            calculate();
+        }
+
+        function calculate() {
+            const h = parseInt(hectaresInp.value);
+            const s = parseInt(spendInp.value);
+            
+            hectaresVal.textContent = h.toLocaleString();
+            spendVal.textContent = `$${s}`;
+
+            const savings = Math.round(h * s * 0.15 * currentCropFactor);
+            const carbon = Math.round(h * 0.43 * currentCropFactor);
+            const payback = Math.max(8, Math.round(20 - (h / 5000)));
+
+            outSavings.textContent = `$${savings.toLocaleString()}`;
+            outCarbon.textContent = carbon.toLocaleString();
+            outPayback.textContent = `${payback} Months`;
+        }
+
+        hectaresInp.addEventListener('input', calculate);
+        spendInp.addEventListener('input', calculate);
+        
+        // Initial calculation
+        calculate();
+
+        // Smooth reveal on scroll interaction
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
+            observer.observe(section);
+        });
+    </script>
+</body></html>
