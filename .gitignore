@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local Netlify folder
+.netlify
+
+# Local reports containing system paths
+deployment_verification_report.md
+
+# Environment variables
+.env*

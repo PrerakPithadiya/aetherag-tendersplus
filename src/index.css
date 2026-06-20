@@ -4,8 +4,8 @@
 
 @layer base {
   body {
-    background-color: #F4F1EA;
-    color: #1B1D1A;
+    background-color: #f9f9f7;
+    color: #1a1c1b;
     font-family: 'Hanken Grotesk', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -84,7 +84,18 @@ input[type=range]:focus {
   animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+@keyframes pulse-green {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(59, 105, 52, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(59, 105, 52, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(59, 105, 52, 0); }
+}
+
+.animate-pulse-green {
+  animation: pulse-green 2s infinite;
+}
+
 /* Chart and gauge custom styles */
 .gradient-bar {
   background: linear-gradient(90deg, #3b6934 0%, #b9eeab 100%);
 }
+

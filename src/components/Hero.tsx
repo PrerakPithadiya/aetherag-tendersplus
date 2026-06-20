@@ -13,10 +13,20 @@ export default function Hero() {
           AetherAg leverages advanced sensor arrays and biomorphic monitoring to bring laboratory-grade precision to global field operations.
         </p>
         <div className="flex gap-md">
-          <button className="bg-primary text-on-primary px-8 py-3 rounded-DEFAULT font-label-md text-label-md hover:opacity-90 transition-all">
+          <button
+            onClick={() => {
+              window.location.hash = "/platform";
+            }}
+            className="bg-primary text-on-primary px-8 py-3 rounded-DEFAULT font-label-md text-label-md hover:opacity-90 transition-all cursor-pointer border-0"
+          >
             Explore Platform
           </button>
-          <button className="border border-primary text-primary px-8 py-3 rounded-DEFAULT font-label-md text-label-md hover:bg-surface-container-high transition-all">
+          <button
+            onClick={() => {
+              window.location.hash = "/research";
+            }}
+            className="border border-primary text-primary px-8 py-3 rounded-DEFAULT font-label-md text-label-md hover:bg-surface-container-high transition-all cursor-pointer"
+          >
             Whitepaper
           </button>
         </div>

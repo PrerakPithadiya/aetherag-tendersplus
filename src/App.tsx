@@ -7,6 +7,9 @@ import VisualBreak from "./components/VisualBreak";
 import Stats from "./components/Stats";
 import Footer from "./components/Footer";
 import Enterprise from "./components/Enterprise";
+import Platform from "./components/Platform";
+import Trader from "./components/Trader";
+import Research from "./components/Research";
 
 function App() {
   const [currentHash, setCurrentHash] = useState(window.location.hash);
@@ -24,8 +27,20 @@ function App() {
     currentHash.startsWith("#/enterprise") ||
     currentHash === "#enterprise";
 
+  const isPlatformRoute =
+    currentHash.startsWith("#/platform") ||
+    currentHash === "#platform";
+
+  const isTraderRoute =
+    currentHash.startsWith("#/trader") ||
+    currentHash === "#trader";
+
+  const isResearchRoute =
+    currentHash.startsWith("#/research") ||
+    currentHash === "#research";
+
   useEffect(() => {
-    if (isEnterpriseRoute) return;
+    if (isEnterpriseRoute || isPlatformRoute || isTraderRoute || isResearchRoute) return;
 
     const observerOptions = {
       threshold: 0.1,
@@ -46,7 +61,7 @@ function App() {
     // Handle smooth scroll for anchor links
     if (currentHash) {
       const id = currentHash.replace("#/", "").replace("#", "");
-      if (id && id !== "enterprise") {
+      if (id && id !== "enterprise" && id !== "platform" && id !== "research") {
         const el = document.getElementById(id);
         if (el) {
           setTimeout(() => {
@@ -59,7 +74,7 @@ function App() {
     return () => {
       elements.forEach((el) => observer.unobserve(el));
     };
-  }, [isEnterpriseRoute, currentHash]);
+  }, [isEnterpriseRoute, isPlatformRoute, isTraderRoute, isResearchRoute, currentHash]);
 
   return (
     <div className="bg-background min-h-screen text-on-surface selection:bg-secondary-container selection:text-on-secondary-container">
@@ -67,6 +82,12 @@ function App() {
       <main className="pt-[80px] md:pt-[100px] overflow-hidden">
         {isEnterpriseRoute ? (
           <Enterprise />
+        ) : isPlatformRoute ? (
+          <Platform />
+        ) : isTraderRoute ? (
+          <Trader />
+        ) : isResearchRoute ? (
+          <Research />
         ) : (
           <>
             <Hero />
@@ -85,7 +106,7 @@ function App() {
           </>
         )}
       </main>
-      {!isEnterpriseRoute && <Footer />}
+      {!isEnterpriseRoute && !isPlatformRoute && !isTraderRoute && !isResearchRoute && <Footer />}
     </div>
   );
 }

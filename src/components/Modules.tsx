@@ -61,7 +61,7 @@ export default function Modules() {
         </div>
         <a
           className="hidden md:flex items-center gap-xs font-label-md text-label-md text-primary hover:translate-x-1 transition-all"
-          href="#all-modules"
+          href="#/platform"
         >
           View All Modules{" "}
           <span className="material-symbols-outlined text-sm">arrow_forward</span>

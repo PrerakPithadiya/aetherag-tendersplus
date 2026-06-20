@@ -15,6 +15,9 @@ export default function Header() {
   }, []);
 
   const isEnterprise = hash.startsWith("#/enterprise") || hash === "#enterprise";
+  const isPlatform = hash.startsWith("#/platform") || hash === "#platform";
+  const isTrader = hash.startsWith("#/trader") || hash === "#trader";
+  const isResearch = hash.startsWith("#/research") || hash === "#research";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -56,56 +59,92 @@ export default function Header() {
     >
       <nav className="flex justify-between items-center w-full px-12 max-w-container-max mx-auto">
         <div className="flex items-center gap-base">
-          <span className="text-headline-sm font-headline-sm font-bold tracking-tighter text-primary">AetherAg</span>
+          <span className="text-headline-sm font-headline-sm font-bold tracking-tighter text-primary">
+            {isTrader ? "TendersPlus" : "AetherAg"}
+          </span>
         </div>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-lg">
-          <a
-            className={`${
-              !isEnterprise && activeSection === "stewardship"
-                ? "text-primary border-b-2 border-primary pb-1"
-                : "text-on-surface-variant hover:text-primary pb-1 border-b-2 border-transparent"
-            } font-label-md text-label-md transition-all duration-300`}
-            href="#stewardship"
-          >
-            Stewardship
-          </a>
-          <a
-            className={`${
-              !isEnterprise && activeSection === "platform"
-                ? "text-primary border-b-2 border-primary pb-1"
-                : "text-on-surface-variant hover:text-primary pb-1 border-b-2 border-transparent"
-            } font-label-md text-label-md transition-all duration-300`}
-            href="#platform"
-          >
-            Platform
-          </a>
-          <a
-            className={`${
-              !isEnterprise && activeSection === "research"
-                ? "text-primary border-b-2 border-primary pb-1"
-                : "text-on-surface-variant hover:text-primary pb-1 border-b-2 border-transparent"
-            } font-label-md text-label-md transition-all duration-300`}
-            href="#research"
-          >
-            Research
-          </a>
-          <a
-            className={`${
-              isEnterprise || (!isEnterprise && activeSection === "precision-data")
-                ? "text-primary border-b-2 border-primary pb-1"
-                : "text-on-surface-variant hover:text-primary pb-1 border-b-2 border-transparent"
-            } font-label-md text-label-md transition-all duration-300`}
-            href="#/enterprise"
-          >
-            Precision Data
-          </a>
-        </div>
+        {isTrader ? (
+          <div className="hidden md:flex items-center gap-lg">
+            <a
+              className="text-on-surface-variant hover:text-primary pb-1 border-b-2 border-transparent font-label-md text-label-md transition-all duration-300"
+              href="#bidding-types"
+            >
+              Bidding Types
+            </a>
+            <a
+              className="text-on-surface-variant hover:text-primary pb-1 border-b-2 border-transparent font-label-md text-label-md transition-all duration-300"
+              href="#bidding-process"
+            >
+              Bidding Process
+            </a>
+            <a
+              className="text-on-surface-variant hover:text-primary pb-1 border-b-2 border-transparent font-label-md text-label-md transition-all duration-300"
+              href="#why-tendersplus"
+            >
+              Why TendersPlus
+            </a>
+          </div>
+        ) : (
+          <div className="hidden md:flex items-center gap-lg">
+            <a
+              className={`${
+                !isEnterprise && !isPlatform && !isResearch && activeSection === "stewardship"
+                  ? "text-primary border-b-2 border-primary pb-1"
+                  : "text-on-surface-variant hover:text-primary pb-1 border-b-2 border-transparent"
+              } font-label-md text-label-md transition-all duration-300`}
+              href="#stewardship"
+            >
+              Stewardship
+            </a>
+            <a
+              className={`${
+                isPlatform
+                  ? "text-primary border-b-2 border-primary pb-1"
+                  : "text-on-surface-variant hover:text-primary pb-1 border-b-2 border-transparent"
+              } font-label-md text-label-md transition-all duration-300`}
+              href="#/platform"
+            >
+              Platform
+            </a>
+            <a
+              className={`${
+                isResearch
+                  ? "text-primary border-b-2 border-primary pb-1"
+                  : "text-on-surface-variant hover:text-primary pb-1 border-b-2 border-transparent"
+              } font-label-md text-label-md transition-all duration-300`}
+              href="#/research"
+            >
+              Research
+            </a>
+            <a
+              className={`${
+                isEnterprise
+                  ? "text-primary border-b-2 border-primary pb-1"
+                  : "text-on-surface-variant hover:text-primary pb-1 border-b-2 border-transparent"
+              } font-label-md text-label-md transition-all duration-300`}
+              href="#/enterprise"
+            >
+              Precision Data
+            </a>
+          </div>
+        )}
 
         <div className="hidden md:block">
-          <button className="bg-primary text-on-primary px-6 py-2 rounded-DEFAULT font-label-md text-label-md hover:opacity-80 transition-opacity cursor-pointer">
-            Get Started
+          <button
+            onClick={() => {
+              const targetId = isTrader ? "contact-trader" : "contact";
+              const el = document.getElementById(targetId);
+              if (el) {
+                el.scrollIntoView({ behavior: "smooth" });
+              } else {
+                window.location.hash = isTrader ? "#/trader#contact-trader" : "#/enterprise#contact";
+              }
+            }}
+            className="bg-primary text-on-primary px-6 py-2 rounded-DEFAULT font-label-md text-label-md hover:opacity-80 transition-opacity cursor-pointer border-0"
+          >
+            {isTrader ? "Get Free Trial" : "Get Started"}
           </button>
         </div>
 
@@ -130,45 +169,98 @@ export default function Header() {
         }`}
       >
         <div className="flex flex-col p-6 gap-md bg-surface h-full">
-          <a
-            onClick={() => setMobileMenuOpen(false)}
-            className={`${
-              !isEnterprise && activeSection === "stewardship" ? "text-primary" : "text-on-surface-variant hover:text-primary"
-            } font-semibold text-lg py-2 border-b border-primary/5`}
-            href="#stewardship"
-          >
-            Stewardship
-          </a>
-          <a
-            onClick={() => setMobileMenuOpen(false)}
-            className={`${
-              !isEnterprise && activeSection === "platform" ? "text-primary" : "text-on-surface-variant hover:text-primary"
-            } font-semibold text-lg py-2 border-b border-primary/5`}
-            href="#platform"
-          >
-            Platform
-          </a>
-          <a
-            onClick={() => setMobileMenuOpen(false)}
-            className={`${
-              !isEnterprise && activeSection === "research" ? "text-primary" : "text-on-surface-variant hover:text-primary"
-            } font-semibold text-lg py-2 border-b border-primary/5`}
-            href="#research"
-          >
-            Research
-          </a>
-          <a
-            onClick={() => setMobileMenuOpen(false)}
-            className={`${
-              isEnterprise || (!isEnterprise && activeSection === "precision-data") ? "text-primary" : "text-on-surface-variant hover:text-primary"
-            } font-semibold text-lg py-2 border-b border-primary/5`}
-            href="#/enterprise"
-          >
-            Precision Data
-          </a>
-          <button className="bg-primary text-on-primary mt-6 py-3 rounded-DEFAULT font-label-md text-[14px] text-center w-full">
-            Get Started
-          </button>
+          {isTrader ? (
+            <>
+              <a
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-on-surface-variant hover:text-primary font-semibold text-lg py-2 border-b border-primary/5"
+                href="#bidding-types"
+              >
+                Bidding Types
+              </a>
+              <a
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-on-surface-variant hover:text-primary font-semibold text-lg py-2 border-b border-primary/5"
+                href="#bidding-process"
+              >
+                Bidding Process
+              </a>
+              <a
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-on-surface-variant hover:text-primary font-semibold text-lg py-2 border-b border-primary/5"
+                href="#why-tendersplus"
+              >
+                Why TendersPlus
+              </a>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  const el = document.getElementById("contact-trader");
+                  if (el) {
+                    el.scrollIntoView({ behavior: "smooth" });
+                  } else {
+                    window.location.hash = "#/trader#contact-trader";
+                  }
+                }}
+                className="bg-primary text-on-primary mt-6 py-3 rounded-DEFAULT font-label-md text-[14px] text-center w-full border-0 cursor-pointer"
+              >
+                Get Free Trial
+              </button>
+            </>
+          ) : (
+            <>
+              <a
+                onClick={() => setMobileMenuOpen(false)}
+                className={`${
+                  !isEnterprise && !isPlatform && !isResearch && activeSection === "stewardship" ? "text-primary" : "text-on-surface-variant hover:text-primary"
+                } font-semibold text-lg py-2 border-b border-primary/5`}
+                href="#stewardship"
+              >
+                Stewardship
+              </a>
+              <a
+                onClick={() => setMobileMenuOpen(false)}
+                className={`${
+                  isPlatform ? "text-primary" : "text-on-surface-variant hover:text-primary"
+                } font-semibold text-lg py-2 border-b border-primary/5`}
+                href="#/platform"
+              >
+                Platform
+              </a>
+              <a
+                onClick={() => setMobileMenuOpen(false)}
+                className={`${
+                  isResearch ? "text-primary" : "text-on-surface-variant hover:text-primary"
+                } font-semibold text-lg py-2 border-b border-primary/5`}
+                href="#/research"
+              >
+                Research
+              </a>
+              <a
+                onClick={() => setMobileMenuOpen(false)}
+                className={`${
+                  isEnterprise ? "text-primary" : "text-on-surface-variant hover:text-primary"
+                } font-semibold text-lg py-2 border-b border-primary/5`}
+                href="#/enterprise"
+              >
+                Precision Data
+              </a>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  const el = document.getElementById("contact");
+                  if (el) {
+                    el.scrollIntoView({ behavior: "smooth" });
+                  } else {
+                    window.location.hash = "#/enterprise#contact";
+                  }
+                }}
+                className="bg-primary text-on-primary mt-6 py-3 rounded-DEFAULT font-label-md text-[14px] text-center w-full border-0 cursor-pointer"
+              >
+                Get Started
+              </button>
+            </>
+          )}
         </div>
       </div>
     </header>
