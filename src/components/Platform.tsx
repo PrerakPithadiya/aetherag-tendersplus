@@ -392,33 +392,51 @@ export default function Platform() {
               {/* Floating Sensor Probe 2: Node AE-12 (Anomaly - Hydration Low) */}
               <div
                 className={`absolute bottom-1/2 right-1/4 group cursor-pointer z-10 transition-all duration-500 ${
-                  anomalyChecked ? "opacity-100 scale-100" : "opacity-40 scale-90"
+                  anomalyChecked ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-90 pointer-events-none"
                 }`}
                 onMouseEnter={() => setHoveredNode("AE-12")}
                 onMouseLeave={() => setHoveredNode(null)}
               >
-                <div className={`w-3 h-3 rounded-full flex items-center justify-center ring-4 transition-all duration-300 ${
-                  anomalyChecked ? "bg-error ring-error/20" : "bg-outline-variant ring-transparent"
-                }`}></div>
+                <div className="w-3 h-3 bg-error rounded-full ring-4 ring-error/20 flex items-center justify-center">
+                  <div className="w-1 h-1 bg-white rounded-full"></div>
+                </div>
 
                 {/* Pulsing error effect */}
                 {anomalyChecked && (
-                  <div className="absolute inset-0 bg-error rounded-full animate-ping opacity-60"></div>
+                  <div className="absolute inset-0 bg-error rounded-full animate-ping opacity-60 pointer-events-none"></div>
                 )}
 
                 {/* Tooltip AE-12 */}
                 <div
-                  className={`absolute top-6 left-1/2 -translate-x-1/2 bg-background border text-[10px] p-2 rounded shadow-lg whitespace-nowrap z-20 transition-all duration-300 text-left ${
-                    anomalyChecked ? "border-error" : "border-outline"
-                  } ${
+                  className={`absolute top-6 left-1/2 -translate-x-1/2 bg-background border border-error text-[10px] p-2 rounded shadow-lg whitespace-nowrap z-20 transition-all duration-300 text-left ${
                     hoveredNode === "AE-12" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                   }`}
                 >
-                  <div className={`font-bold ${anomalyChecked ? "text-error" : "text-primary"}`}>
-                    Warning: Hydration Low
-                  </div>
+                  <div className="font-bold text-error">Warning: Hydration Low</div>
                   <div className="text-on-surface-variant font-body">Sector 12-F</div>
                   <div className="text-on-surface-variant font-body">Action Req: Auto-Irrigate</div>
+                </div>
+              </div>
+
+              {/* Floating Sensor Probe 3: Node AE-08 (Baseline) */}
+              <div
+                className="absolute top-[65%] left-[48%] group cursor-pointer z-10"
+                onMouseEnter={() => setHoveredNode("AE-08")}
+                onMouseLeave={() => setHoveredNode(null)}
+              >
+                <div className="w-3 h-3 bg-surface-tint rounded-full ring-4 ring-surface-tint/20 flex items-center justify-center">
+                  <div className="w-1 h-1 bg-white rounded-full"></div>
+                </div>
+
+                {/* Tooltip AE-08 */}
+                <div
+                  className={`absolute top-6 left-1/2 -translate-x-1/2 bg-background border border-outline text-[10px] p-2 rounded shadow-lg whitespace-nowrap z-20 transition-all duration-300 text-left ${
+                    hoveredNode === "AE-08" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                  }`}
+                >
+                  <div className="font-bold text-primary">Probe Node AE-08</div>
+                  <div className="text-on-surface-variant font-body">Depth: 30cm</div>
+                  <div className="text-on-surface-variant font-body">Salinity: 0.9 dS/m</div>
                 </div>
               </div>
 
@@ -650,6 +668,40 @@ export default function Platform() {
                 {/* Key data point MAX_POTENTIAL */}
                 {chartAnimated && (
                   <>
+                    {/* Leader Line */}
+                    <line
+                      x1="300"
+                      y1="60"
+                      x2="300"
+                      y2="38"
+                      stroke="#3b6934"
+                      strokeWidth="1"
+                      strokeDasharray="2,2"
+                      opacity="0.6"
+                    />
+                    {/* Badge Container */}
+                    <rect
+                      x="250"
+                      y="20"
+                      width="100"
+                      height="18"
+                      rx="9"
+                      fill="#3b6934"
+                    />
+                    {/* Badge Text */}
+                    <text
+                      fill="#ffffff"
+                      fontFamily="Hanken Grotesk"
+                      fontSize="8"
+                      fontWeight="bold"
+                      x="300"
+                      y="32"
+                      textAnchor="middle"
+                      className="select-none font-bold tracking-wider"
+                    >
+                      MAX_POTENTIAL
+                    </text>
+                    {/* Pulse Indicator */}
                     <circle
                       cx="300"
                       cy="60"
@@ -657,17 +709,6 @@ export default function Platform() {
                       r="5"
                       className="animate-pulse"
                     ></circle>
-                    <text
-                      fill="#3b6934"
-                      fontFamily="Hanken Grotesk"
-                      fontSize="9"
-                      fontWeight="bold"
-                      x="310"
-                      y="56"
-                      className="select-none font-bold tracking-wider"
-                    >
-                      MAX_POTENTIAL
-                    </text>
                   </>
                 )}
               </svg>
@@ -681,12 +722,12 @@ export default function Platform() {
               <span>Harvest</span>
             </div>
 
-            {/* Float Overlay ML Card */}
-            <div className="absolute -right-6 -bottom-6 bg-secondary text-on-secondary p-6 rounded-lg shadow-xl max-w-[200px] border border-white/10">
-              <span className="font-label text-[10px] uppercase block mb-1 opacity-80 font-bold">
+            {/* ML Insight Alert Banner */}
+            <div className="mt-8 bg-secondary/10 border border-secondary/20 p-4 rounded-xl flex flex-col sm:flex-row gap-3 sm:items-center text-left">
+              <span className="font-label text-[10px] uppercase font-bold tracking-widest bg-secondary text-on-secondary px-2 py-1 rounded select-none shrink-0 w-fit">
                 ML Insight
               </span>
-              <p className="font-body text-[12px] leading-tight text-white/95">
+              <p className="font-body text-[12px] leading-snug text-on-secondary-container">
                 Projected nitrogen uptake is 8% higher than historical average. Adjust fertigation for Sector 4-A.
               </p>
             </div>
