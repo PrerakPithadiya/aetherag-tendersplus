@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
+import { useAuth } from "../lib/AuthProvider";
 
 export default function Header() {
+  const { user, signOut } = useAuth();
+  const userInitial = user?.email?.charAt(0).toUpperCase() || "";
+  const userName = user?.user_metadata?.full_name || user?.email || "";
+
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -131,21 +136,40 @@ export default function Header() {
           </div>
         )}
 
-        <div className="hidden md:block">
-          <button
-            onClick={() => {
-              const targetId = isTrader ? "contact-trader" : "contact";
-              const el = document.getElementById(targetId);
-              if (el) {
-                el.scrollIntoView({ behavior: "smooth" });
-              } else {
-                window.location.hash = isTrader ? "#/trader#contact-trader" : "#/enterprise#contact";
-              }
-            }}
-            className="bg-primary text-on-primary px-6 py-2 rounded-DEFAULT font-label-md text-label-md hover:opacity-80 transition-opacity cursor-pointer border-0"
-          >
-            {isTrader ? "Get Free Trial" : "Get Started"}
-          </button>
+        <div className="hidden md:flex items-center gap-base">
+          {user ? (
+            <div className="flex items-center gap-base">
+              <div className="flex items-center gap-2 py-1 px-3 bg-surface-container rounded-full border border-outline-variant/30">
+                <div className="h-7 w-7 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-bold text-xs uppercase font-label">
+                  {userInitial}
+                </div>
+                <span className="font-label text-label-md text-on-surface truncate max-w-[120px] select-none" title={userName}>
+                  {userName}
+                </span>
+              </div>
+              <button
+                onClick={() => signOut()}
+                className="text-on-surface-variant hover:text-primary font-label-md text-label-md transition-colors cursor-pointer border-0 bg-transparent pl-2"
+              >
+                Log Out
+              </button>
+            </div>
+          ) : (
+            <>
+              <a
+                href="#/login"
+                className="text-on-surface-variant hover:text-primary font-label-md text-label-md transition-colors mr-md"
+              >
+                Log In
+              </a>
+              <a
+                href="#/signup"
+                className="bg-primary text-on-primary px-6 py-2 rounded-DEFAULT font-label-md text-label-md hover:opacity-80 transition-opacity cursor-pointer border-0 block text-center"
+              >
+                {isTrader ? "Get Free Trial" : "Sign Up"}
+              </a>
+            </>
+          )}
         </div>
 
         {/* Mobile menu trigger */}
@@ -192,20 +216,42 @@ export default function Header() {
               >
                 Why TendersPlus
               </a>
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  const el = document.getElementById("contact-trader");
-                  if (el) {
-                    el.scrollIntoView({ behavior: "smooth" });
-                  } else {
-                    window.location.hash = "#/trader#contact-trader";
-                  }
-                }}
-                className="bg-primary text-on-primary mt-6 py-3 rounded-DEFAULT font-label-md text-[14px] text-center w-full border-0 cursor-pointer"
-              >
-                Get Free Trial
-              </button>
+              {user ? (
+                <div className="flex flex-col gap-2 mt-auto pb-12">
+                  <div className="py-2.5 px-4 bg-surface-container rounded-lg flex items-center gap-3 border border-outline-variant/30">
+                    <div className="h-8 w-8 bg-secondary text-on-secondary rounded-full flex items-center justify-center font-bold text-xs uppercase">
+                      {userInitial}
+                    </div>
+                    <span className="font-body text-body-md text-on-surface truncate">{userName}</span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      signOut();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="bg-error text-on-error py-3 rounded-DEFAULT font-label-md text-[14px] text-center w-full cursor-pointer border-0"
+                  >
+                    Log Out
+                  </button>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-2 mt-auto pb-12">
+                  <a
+                    href="#/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="border border-primary text-primary py-3 rounded-DEFAULT font-label-md text-[14px] text-center w-full block transition-colors bg-transparent"
+                  >
+                    Log In
+                  </a>
+                  <a
+                    href="#/signup"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="bg-primary text-on-primary py-3 rounded-DEFAULT font-label-md text-[14px] text-center w-full block hover:opacity-90 transition-opacity"
+                  >
+                    Get Free Trial
+                  </a>
+                </div>
+              )}
             </>
           ) : (
             <>
@@ -245,20 +291,42 @@ export default function Header() {
               >
                 Precision Data
               </a>
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  const el = document.getElementById("contact");
-                  if (el) {
-                    el.scrollIntoView({ behavior: "smooth" });
-                  } else {
-                    window.location.hash = "#/enterprise#contact";
-                  }
-                }}
-                className="bg-primary text-on-primary mt-6 py-3 rounded-DEFAULT font-label-md text-[14px] text-center w-full border-0 cursor-pointer"
-              >
-                Get Started
-              </button>
+              {user ? (
+                <div className="flex flex-col gap-2 mt-auto pb-12">
+                  <div className="py-2.5 px-4 bg-surface-container rounded-lg flex items-center gap-3 border border-outline-variant/30">
+                    <div className="h-8 w-8 bg-secondary text-on-secondary rounded-full flex items-center justify-center font-bold text-xs uppercase">
+                      {userInitial}
+                    </div>
+                    <span className="font-body text-body-md text-on-surface truncate">{userName}</span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      signOut();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="bg-error text-on-error py-3 rounded-DEFAULT font-label-md text-[14px] text-center w-full cursor-pointer border-0"
+                  >
+                    Log Out
+                  </button>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-2 mt-auto pb-12">
+                  <a
+                    href="#/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="border border-primary text-primary py-3 rounded-DEFAULT font-label-md text-[14px] text-center w-full block transition-colors bg-transparent"
+                  >
+                    Log In
+                  </a>
+                  <a
+                    href="#/signup"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="bg-primary text-on-primary py-3 rounded-DEFAULT font-label-md text-[14px] text-center w-full block hover:opacity-90 transition-opacity"
+                  >
+                    Get Started
+                  </a>
+                </div>
+              )}
             </>
           )}
         </div>

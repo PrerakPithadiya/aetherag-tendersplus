@@ -101,3 +101,22 @@ input[type=range]:focus {
   background: linear-gradient(90deg, #3b6934 0%, #b9eeab 100%);
 }
 
+@keyframes breathing-glow {
+  0%, 100% { text-shadow: 0 0 10px rgba(59, 105, 52, 0.4); opacity: 0.9; }
+  50% { text-shadow: 0 0 25px rgba(59, 105, 52, 0.8); opacity: 1; }
+}
+
+.animate-glow {
+  animation: breathing-glow 4s ease-in-out infinite;
+}
+
+.micro-lift {
+  transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1), box-shadow 0.2s ease;
+}
+
+.micro-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+

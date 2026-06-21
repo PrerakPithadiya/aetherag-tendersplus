@@ -10,6 +10,9 @@ import Enterprise from "./components/Enterprise";
 import Platform from "./components/Platform";
 import Trader from "./components/Trader";
 import Research from "./components/Research";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import { AuthProvider } from "./lib/AuthProvider";
 
 function App() {
   const [currentHash, setCurrentHash] = useState(window.location.hash);
@@ -39,8 +42,16 @@ function App() {
     currentHash.startsWith("#/research") ||
     currentHash === "#research";
 
+  const isLoginRoute =
+    currentHash.startsWith("#/login") ||
+    currentHash === "#login";
+
+  const isSignupRoute =
+    currentHash.startsWith("#/signup") ||
+    currentHash === "#signup";
+
   useEffect(() => {
-    if (isEnterpriseRoute || isPlatformRoute || isTraderRoute || isResearchRoute) return;
+    if (isEnterpriseRoute || isPlatformRoute || isTraderRoute || isResearchRoute || isLoginRoute || isSignupRoute) return;
 
     const observerOptions = {
       threshold: 0.1,
@@ -61,7 +72,7 @@ function App() {
     // Handle smooth scroll for anchor links
     if (currentHash) {
       const id = currentHash.replace("#/", "").replace("#", "");
-      if (id && id !== "enterprise" && id !== "platform" && id !== "research") {
+      if (id && id !== "enterprise" && id !== "platform" && id !== "research" && id !== "login" && id !== "signup") {
         const el = document.getElementById(id);
         if (el) {
           setTimeout(() => {
@@ -74,41 +85,54 @@ function App() {
     return () => {
       elements.forEach((el) => observer.unobserve(el));
     };
-  }, [isEnterpriseRoute, isPlatformRoute, isTraderRoute, isResearchRoute, currentHash]);
+  }, [isEnterpriseRoute, isPlatformRoute, isTraderRoute, isResearchRoute, isLoginRoute, isSignupRoute, currentHash]);
+
+  if (isLoginRoute || isSignupRoute) {
+    return (
+      <AuthProvider>
+        <div className="bg-background min-h-screen text-on-surface selection:bg-secondary-container selection:text-on-secondary-container">
+          {isLoginRoute ? <Login /> : <Signup />}
+        </div>
+      </AuthProvider>
+    );
+  }
 
   return (
-    <div className="bg-background min-h-screen text-on-surface selection:bg-secondary-container selection:text-on-secondary-container">
-      <Header />
-      <main className="pt-[80px] md:pt-[100px] overflow-hidden">
-        {isEnterpriseRoute ? (
-          <Enterprise />
-        ) : isPlatformRoute ? (
-          <Platform />
-        ) : isTraderRoute ? (
-          <Trader />
-        ) : isResearchRoute ? (
-          <Research />
-        ) : (
-          <>
-            <Hero />
-            <div className="reveal">
-              <Stewardship />
-            </div>
-            <div className="reveal">
-              <Modules />
-            </div>
-            <div className="reveal">
-              <VisualBreak />
-            </div>
-            <div className="reveal">
-              <Stats />
-            </div>
-          </>
-        )}
-      </main>
-      {!isEnterpriseRoute && !isPlatformRoute && !isTraderRoute && !isResearchRoute && <Footer />}
-    </div>
+    <AuthProvider>
+      <div className="bg-background min-h-screen text-on-surface selection:bg-secondary-container selection:text-on-secondary-container">
+        <Header />
+        <main className="pt-[80px] md:pt-[100px] overflow-hidden">
+          {isEnterpriseRoute ? (
+            <Enterprise />
+          ) : isPlatformRoute ? (
+            <Platform />
+          ) : isTraderRoute ? (
+            <Trader />
+          ) : isResearchRoute ? (
+            <Research />
+          ) : (
+            <>
+              <Hero />
+              <div className="reveal">
+                <Stewardship />
+              </div>
+              <div className="reveal">
+                <Modules />
+              </div>
+              <div className="reveal">
+                <VisualBreak />
+              </div>
+              <div className="reveal">
+                <Stats />
+              </div>
+            </>
+          )}
+        </main>
+        {!isEnterpriseRoute && !isPlatformRoute && !isTraderRoute && !isResearchRoute && <Footer />}
+      </div>
+    </AuthProvider>
   );
 }
 
 export default App;
+
