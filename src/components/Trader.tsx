@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { supabase } from "../lib/supabaseClient";
 
 export default function Trader() {
   // Timeline Active Step State
@@ -60,6 +61,8 @@ export default function Trader() {
     };
   }, []);
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -67,14 +70,41 @@ export default function Trader() {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.phone || !formData.requirement) {
       setFormError("Please fill out all required fields.");
       return;
     }
     setFormError("");
-    setFormSubmitted(true);
+    setLoading(true);
+
+    try {
+      const interests = [
+        `Phone: ${formData.phone}`,
+        `Requirement: ${formData.requirement}`
+      ];
+      const { error } = await supabase
+        .from("trader_inquiries")
+        .insert([
+          {
+            name: formData.name,
+            company: formData.company,
+            email: formData.email,
+            bidding_interests: interests
+          }
+        ]);
+
+      if (error) throw error;
+      setFormSubmitted(true);
+    } catch (err) {
+      console.error("Trader inquiry submission error:", err);
+      setFormError(
+        err instanceof Error ? err.message : "Failed to submit inquiry. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   const biddingTypes = [
@@ -601,10 +631,11 @@ export default function Trader() {
                         type="text"
                         id="name"
                         required
+                        disabled={loading}
                         value={formData.name}
                         onChange={handleInputChange}
                         placeholder=" "
-                        className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none"
+                        className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none disabled:opacity-55"
                       />
                       <label
                         htmlFor="name"
@@ -618,10 +649,11 @@ export default function Trader() {
                       <input
                         type="text"
                         id="company"
+                        disabled={loading}
                         value={formData.company}
                         onChange={handleInputChange}
                         placeholder=" "
-                        className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none"
+                        className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none disabled:opacity-55"
                       />
                       <label
                         htmlFor="company"
@@ -638,10 +670,11 @@ export default function Trader() {
                         type="email"
                         id="email"
                         required
+                        disabled={loading}
                         value={formData.email}
                         onChange={handleInputChange}
                         placeholder=" "
-                        className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none"
+                        className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none disabled:opacity-55"
                       />
                       <label
                         htmlFor="email"
@@ -656,10 +689,11 @@ export default function Trader() {
                         type="tel"
                         id="phone"
                         required
+                        disabled={loading}
                         value={formData.phone}
                         onChange={handleInputChange}
                         placeholder=" "
-                        className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none"
+                        className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none disabled:opacity-55"
                       />
                       <label
                         htmlFor="phone"
@@ -674,11 +708,12 @@ export default function Trader() {
                     <textarea
                       id="requirement"
                       required
+                      disabled={loading}
                       rows={3}
                       value={formData.requirement}
                       onChange={handleInputChange}
                       placeholder=" "
-                      className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none resize-none font-body text-body-md"
+                      className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none resize-none font-body text-body-md disabled:opacity-55"
                     />
                     <label
                       htmlFor="requirement"
@@ -690,9 +725,10 @@ export default function Trader() {
 
                   <button
                     type="submit"
-                    className="w-full bg-primary text-white py-5 rounded-DEFAULT font-label text-label-md tracking-[0.3em] uppercase hover:opacity-90 transition-opacity cursor-pointer border-0 font-bold"
+                    disabled={loading}
+                    className="w-full bg-primary text-white py-5 rounded-DEFAULT font-label text-label-md tracking-[0.3em] uppercase hover:opacity-90 transition-opacity cursor-pointer border-0 font-bold disabled:opacity-55"
                   >
-                    INITIALIZE INQUIRY
+                    {loading ? "INITIALIZING..." : "INITIALIZE INQUIRY"}
                   </button>
                 </form>
               )}

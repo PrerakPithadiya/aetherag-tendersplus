@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { supabase } from "../lib/supabaseClient";
 
 type DatasetKey = "soil" | "atmospheric" | "par";
 
@@ -165,7 +166,7 @@ export default function Research() {
     setTimeout(() => setIsCopied(false), 2000);
   };
 
-  const publications = [
+  const fallbackPublications = [
     {
       title: "The Impact of Synthetic Microbiology on Corn Yield",
       author: "Dr. Elena Vos",
@@ -191,6 +192,25 @@ export default function Research() {
       metric: "Hyperspectral Index"
     }
   ];
+
+  const [publications, setPublications] = useState(fallbackPublications);
+
+  useEffect(() => {
+    async function fetchPublications() {
+      try {
+        const { data, error } = await supabase
+          .from("publications")
+          .select("title, author, affiliation, metric");
+        if (error) throw error;
+        if (data && data.length > 0) {
+          setPublications(data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch publications from Supabase:", err);
+      }
+    }
+    fetchPublications();
+  }, []);
 
   const filteredPublications = publications.filter(pub => 
     pub.title.toLowerCase().includes(searchQuery.toLowerCase()) ||

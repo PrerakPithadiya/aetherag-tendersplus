@@ -1,14 +1,42 @@
 import { useState } from "react";
+import { supabase } from "../lib/supabaseClient";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      setSubscribed(true);
+    if (!email) return;
+
+    setLoading(true);
+    setErrorMsg("");
+
+    try {
+      const { error } = await supabase
+        .from("newsletter_subscribers")
+        .insert([{ email }]);
+
+      if (error) {
+        if (error.code === "23505") {
+          // Unique key violation -> already subscribed
+          setSubscribed(true);
+        } else {
+          throw error;
+        }
+      } else {
+        setSubscribed(true);
+      }
       setEmail("");
+    } catch (err) {
+      console.error("Subscription error:", err);
+      setErrorMsg(
+        err instanceof Error ? err.message : "Failed to subscribe. Please try again."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -33,21 +61,28 @@ export default function Footer() {
                 id="newsletter"
                 type="email"
                 required
+                disabled={loading}
                 placeholder="Email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="bg-surface border border-outline-variant rounded-DEFAULT px-3 py-1.5 text-xs w-full focus:outline-none focus:border-secondary transition-colors"
+                className="bg-surface border border-outline-variant rounded-DEFAULT px-3 py-1.5 text-xs w-full focus:outline-none focus:border-secondary transition-colors disabled:opacity-55"
               />
               <button
                 type="submit"
-                className="bg-primary text-on-primary px-4 py-1.5 rounded-DEFAULT font-label-md text-label-md hover:opacity-90 transition-opacity whitespace-nowrap"
+                disabled={loading}
+                className="bg-primary text-on-primary px-4 py-1.5 rounded-DEFAULT font-label-md text-label-md hover:opacity-90 transition-opacity whitespace-nowrap disabled:opacity-55 cursor-pointer"
               >
-                Sign Up
+                {loading ? "Signing Up..." : "Sign Up"}
               </button>
             </div>
             {subscribed && (
               <p className="text-[10px] text-secondary font-medium animate-pulse">
                 ✓ Successfully subscribed to newsletter.
+              </p>
+            )}
+            {errorMsg && (
+              <p className="text-[10px] text-error font-medium">
+                ✗ {errorMsg}
               </p>
             )}
           </form>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { supabase } from "../lib/supabaseClient";
 
 export default function Enterprise() {
   // Calculator State
@@ -82,6 +83,8 @@ export default function Enterprise() {
     };
   }, []);
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -89,14 +92,39 @@ export default function Enterprise() {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.enterprise) {
       setFormError("Please fill out all required fields.");
       return;
     }
     setFormError("");
-    setFormSubmitted(true);
+    setLoading(true);
+
+    try {
+      const interests = formData.hectaresForm ? [`Hectares: ${formData.hectaresForm}`] : [];
+      const { error } = await supabase
+        .from("enterprise_consultations")
+        .insert([
+          {
+            name: formData.name,
+            company: formData.enterprise,
+            email: formData.email,
+            message: formData.challenge,
+            interests: interests
+          }
+        ]);
+
+      if (error) throw error;
+      setFormSubmitted(true);
+    } catch (err) {
+      console.error("Enterprise inquiry submission error:", err);
+      setFormError(
+        err instanceof Error ? err.message : "Failed to submit inquiry. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -463,10 +491,11 @@ export default function Enterprise() {
                     type="text"
                     id="name"
                     required
+                    disabled={loading}
                     value={formData.name}
                     onChange={handleInputChange}
                     placeholder=" "
-                    className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none"
+                    className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none disabled:opacity-55"
                   />
                   <label
                     htmlFor="name"
@@ -480,10 +509,11 @@ export default function Enterprise() {
                     type="text"
                     id="enterprise"
                     required
+                    disabled={loading}
                     value={formData.enterprise}
                     onChange={handleInputChange}
                     placeholder=" "
-                    className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none"
+                    className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none disabled:opacity-55"
                   />
                   <label
                     htmlFor="enterprise"
@@ -499,10 +529,11 @@ export default function Enterprise() {
                   <input
                     type="number"
                     id="hectaresForm"
+                    disabled={loading}
                     value={formData.hectaresForm}
                     onChange={handleInputChange}
                     placeholder=" "
-                    className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none"
+                    className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none disabled:opacity-55"
                   />
                   <label
                     htmlFor="hectaresForm"
@@ -516,10 +547,11 @@ export default function Enterprise() {
                     type="email"
                     id="email"
                     required
+                    disabled={loading}
                     value={formData.email}
                     onChange={handleInputChange}
                     placeholder=" "
-                    className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none"
+                    className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none disabled:opacity-55"
                   />
                   <label
                     htmlFor="email"
@@ -534,10 +566,11 @@ export default function Enterprise() {
                 <textarea
                   id="challenge"
                   rows={3}
+                  disabled={loading}
                   value={formData.challenge}
                   onChange={handleInputChange}
                   placeholder=" "
-                  className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none resize-none font-body text-body-md"
+                  className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none resize-none font-body text-body-md disabled:opacity-55"
                 />
                 <label
                   htmlFor="challenge"
@@ -550,9 +583,10 @@ export default function Enterprise() {
               <div className="pt-6">
                 <button
                   type="submit"
-                  className="w-full bg-primary text-white py-5 rounded-lg font-label text-label-md tracking-[0.3em] uppercase hover:bg-primary-container transition-all cursor-pointer font-bold border-0"
+                  disabled={loading}
+                  className="w-full bg-primary text-white py-5 rounded-lg font-label text-label-md tracking-[0.3em] uppercase hover:bg-primary-container transition-all cursor-pointer font-bold border-0 disabled:opacity-55"
                 >
-                  Initialize Inquiry
+                  {loading ? "Initializing..." : "Initialize Inquiry"}
                 </button>
               </div>
             </form>
