@@ -177,7 +177,7 @@ export default function Signup() {
         <div
           className="left-pane overflow-hidden hidden md:block"
           style={{
-            backgroundImage: `url('https://lh3.googleusercontent.com/aida/AP1WRLv0X0QP8Jedsj4QjWlYIn2_rJ6XKD-r9AO5bBM1tKPUYJL7sEXail2Q6mz0HxrDPP5UI6Ad-kgoYoxZWEcm_7Pfi2zItEmN5KLm4508LMpn4TUlWpL1PBZB14b8_I0JY8ovwjojGYBoOk64OQegkDt7Leb5-YHS8lVnjDq8U9ADyOpI47hwkX8nkeXMKVwrTL17-8R8IpQABC6qNjZrIk4eBSovYaJ-TRTUKH-FqZiAp9swiVZl157pcxE')`,
+            backgroundImage: "url('/signup_bg.png')",
           }}
         >
           {/* Dark Gradient Overlay */}

@@ -109,7 +109,7 @@ export default function Login({ onSuccess }: LoginProps) {
             <img
               alt="Macro agriculture"
               className="h-full w-full object-cover"
-              src="https://lh3.googleusercontent.com/aida/AP1WRLuo2_yYugZUNhtg1G_V3gcWWOa3SC6l8yuuGSRL98wdyjx1gGfhlCZBHbypcJUUDBAWl94zr0T1kg5ZJ6CtqItUveNUMJUyz0SfGMF8054rGLj3qAkdCQghC1QykEu6IajiTiPPX9u1ffHe8hd-OvUBtWTh3g4BtN2d9lGJEpczt_Ot9B9g4dRWhaqWhHw-9nGr2fNIuyBDzWZl07fuERTjVE2pViL873EntynnD6PQdmmw6Sr899YG0w"
+              src="/login_bg.png"
             />
           </div>
           {/* Dark Gradient Overlay */}
