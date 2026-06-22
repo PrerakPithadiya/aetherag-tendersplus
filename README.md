@@ -1,6 +1,9 @@
-# React + TypeScript + Vite
+# AetherAg TendersPlus
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🚀 **Live Website:** [comfy-maamoul-526082.netlify.app](https://comfy-maamoul-526082.netlify.app)
+
+AetherAg TendersPlus is a premium precision agriculture stewardship platform and trader bidding portal.
+
 
 Currently, two official plugins are available:
 
