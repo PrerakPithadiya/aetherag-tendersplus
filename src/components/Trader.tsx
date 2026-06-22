@@ -709,11 +709,11 @@ export default function Trader() {
                       id="requirement"
                       required
                       disabled={loading}
-                      rows={3}
+                      rows={6}
                       value={formData.requirement}
                       onChange={handleInputChange}
                       placeholder=" "
-                      className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none resize-none font-body text-body-md disabled:opacity-55"
+                      className="peer w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 px-0 py-3 transition-all text-on-surface outline-none resize-y font-body text-body-md disabled:opacity-55"
                     />
                     <label
                       htmlFor="requirement"
