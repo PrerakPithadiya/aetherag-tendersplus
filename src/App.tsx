@@ -12,9 +12,11 @@ import Trader from "./components/Trader";
 import Research from "./components/Research";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import { AuthProvider } from "./lib/AuthProvider";
+import Landing from "./components/Landing";
+import { AuthProvider, useAuth } from "./lib/AuthProvider";
 
-function App() {
+function AppContent() {
+  const { user, loading } = useAuth();
   const [currentHash, setCurrentHash] = useState(window.location.hash);
 
   useEffect(() => {
@@ -50,8 +52,25 @@ function App() {
     currentHash.startsWith("#/signup") ||
     currentHash === "#signup";
 
+  // Navigation guard
   useEffect(() => {
-    if (isEnterpriseRoute || isPlatformRoute || isTraderRoute || isResearchRoute || isLoginRoute || isSignupRoute) return;
+    if (loading) return;
+
+    if (!user) {
+      // If logged out, only allow login or signup routes. Anything else resets/keeps landing.
+      if (isEnterpriseRoute || isPlatformRoute || isTraderRoute || isResearchRoute) {
+        window.location.hash = "#/login";
+      }
+    } else {
+      // If logged in, redirect away from login/signup to home dashboard
+      if (isLoginRoute || isSignupRoute) {
+        window.location.hash = "#";
+      }
+    }
+  }, [user, loading, isEnterpriseRoute, isPlatformRoute, isTraderRoute, isResearchRoute, isLoginRoute, isSignupRoute]);
+
+  useEffect(() => {
+    if (!user || isLoginRoute || isSignupRoute || isEnterpriseRoute || isPlatformRoute || isTraderRoute || isResearchRoute) return;
 
     const observerOptions = {
       threshold: 0.1,
@@ -85,51 +104,74 @@ function App() {
     return () => {
       elements.forEach((el) => observer.unobserve(el));
     };
-  }, [isEnterpriseRoute, isPlatformRoute, isTraderRoute, isResearchRoute, isLoginRoute, isSignupRoute, currentHash]);
+  }, [user, isEnterpriseRoute, isPlatformRoute, isTraderRoute, isResearchRoute, isLoginRoute, isSignupRoute, currentHash]);
 
-  if (isLoginRoute || isSignupRoute) {
+  if (loading) {
     return (
-      <AuthProvider>
-        <div className="bg-background min-h-screen text-on-surface selection:bg-secondary-container selection:text-on-secondary-container">
-          {isLoginRoute ? <Login /> : <Signup />}
+      <div className="bg-background min-h-screen flex items-center justify-center text-on-surface">
+        <div className="flex flex-col items-center gap-4">
+          <span className="material-symbols-outlined text-4xl animate-spin text-secondary">
+            progress_activity
+          </span>
+          <span className="font-label text-label-md">Loading AetherAg TendersPlus...</span>
         </div>
-      </AuthProvider>
+      </div>
     );
   }
 
+  // Unauthenticated layout
+  if (!user) {
+    if (isLoginRoute || isSignupRoute) {
+      return (
+        <div className="bg-background min-h-screen text-on-surface selection:bg-secondary-container selection:text-on-secondary-container">
+          {isLoginRoute ? <Login /> : <Signup />}
+        </div>
+      );
+    }
+    // Show Landing Page for all other routes
+    return <Landing />;
+  }
+
+  // Authenticated layout
+  return (
+    <div className="bg-background min-h-screen text-on-surface selection:bg-secondary-container selection:text-on-secondary-container">
+      <Header />
+      <main className="pt-[80px] md:pt-[100px] overflow-hidden">
+        {isEnterpriseRoute ? (
+          <Enterprise />
+        ) : isPlatformRoute ? (
+          <Platform />
+        ) : isTraderRoute ? (
+          <Trader />
+        ) : isResearchRoute ? (
+          <Research />
+        ) : (
+          <>
+            <Hero />
+            <div className="reveal">
+              <Stewardship />
+            </div>
+            <div className="reveal">
+              <Modules />
+            </div>
+            <div className="reveal">
+              <VisualBreak />
+            </div>
+            <div className="reveal">
+              <Stats />
+            </div>
+          </>
+        )}
+      </main>
+      {!isEnterpriseRoute && !isPlatformRoute && !isTraderRoute && !isResearchRoute && <Footer />}
+    </div>
+  );
+}
+
+function App() {
   return (
     <AuthProvider>
-      <div className="bg-background min-h-screen text-on-surface selection:bg-secondary-container selection:text-on-secondary-container">
-        <Header />
-        <main className="pt-[80px] md:pt-[100px] overflow-hidden">
-          {isEnterpriseRoute ? (
-            <Enterprise />
-          ) : isPlatformRoute ? (
-            <Platform />
-          ) : isTraderRoute ? (
-            <Trader />
-          ) : isResearchRoute ? (
-            <Research />
-          ) : (
-            <>
-              <Hero />
-              <div className="reveal">
-                <Stewardship />
-              </div>
-              <div className="reveal">
-                <Modules />
-              </div>
-              <div className="reveal">
-                <VisualBreak />
-              </div>
-              <div className="reveal">
-                <Stats />
-              </div>
-            </>
-          )}
-        </main>
-        {!isEnterpriseRoute && !isPlatformRoute && !isTraderRoute && !isResearchRoute && <Footer />}
-      </div>
+      <AppContent />
     </AuthProvider>
   );
 }
