@@ -143,7 +143,7 @@ export default function Platform() {
     <div className="bg-background text-on-surface font-body selection:bg-secondary-container selection:text-on-secondary-container">
       
       {/* Section 1: Hero */}
-      <section id="platform-hero" className="relative min-h-[870px] flex items-center overflow-hidden pt-20 pb-32">
+      <section id="platform-hero" className="reveal relative min-h-[870px] flex items-center overflow-hidden pt-20 pb-32">
         <div className="max-w-[1280px] mx-auto px-12 grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
           <div className="md:col-span-6 z-10 text-left">
             <span className="font-label text-label-sm uppercase tracking-[0.2em] text-secondary font-bold mb-4 block">

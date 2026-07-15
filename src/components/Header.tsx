@@ -8,7 +8,6 @@ export default function Header() {
 
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
   const [hash, setHash] = useState(window.location.hash);
 
   useEffect(() => {
@@ -32,23 +31,6 @@ export default function Header() {
       } else {
         setScrolled(false);
       }
-
-      // Scrollspy active section detection using viewport client rects
-      const sections = ["stewardship", "platform", "research", "precision-data"];
-      let currentActive = "";
-
-      for (const sectionId of sections) {
-        const el = document.getElementById(sectionId);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          // Virtual trigger line at y = 250px from top of viewport
-          if (rect.top <= 250 && rect.bottom >= 250) {
-            currentActive = sectionId;
-            break;
-          }
-        }
-      }
-      setActiveSection(currentActive);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -95,11 +77,11 @@ export default function Header() {
           <div className="hidden md:flex items-center gap-lg">
             <a
               className={`${
-                !isEnterprise && !isPlatform && !isResearch && activeSection === "stewardship"
+                !isEnterprise && !isPlatform && !isResearch
                   ? "text-primary border-b-2 border-primary pb-1"
                   : "text-on-surface-variant hover:text-primary pb-1 border-b-2 border-transparent"
               } font-label-md text-label-md transition-all duration-300`}
-              href="#stewardship"
+              href="#"
             >
               Stewardship
             </a>
@@ -258,9 +240,9 @@ export default function Header() {
               <a
                 onClick={() => setMobileMenuOpen(false)}
                 className={`${
-                  !isEnterprise && !isPlatform && !isResearch && activeSection === "stewardship" ? "text-primary" : "text-on-surface-variant hover:text-primary"
+                  !isEnterprise && !isPlatform && !isResearch ? "text-primary" : "text-on-surface-variant hover:text-primary"
                 } font-semibold text-lg py-2 border-b border-primary/5`}
-                href="#stewardship"
+                href="#"
               >
                 Stewardship
               </a>

@@ -1,6 +1,6 @@
 export default function Stewardship() {
   return (
-    <section id="stewardship" className="bg-surface-container-low py-xl">
+    <section id="stewardship" className="bg-surface-container-low py-xl scroll-mt-[100px]">
       <div className="max-w-container-max mx-auto px-12 md:grid md:grid-cols-12 gap-gutter items-center reveal">
         <div className="md:col-span-10 md:col-start-2 text-center md:text-left">
           <h2 className="font-headline-md text-headline-md mb-md border-b border-outline-variant pb-md text-primary">

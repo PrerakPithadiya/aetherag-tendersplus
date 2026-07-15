@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <section className="max-w-container-max mx-auto px-12 py-xl md:py-[120px] flex flex-col md:grid md:grid-cols-12 gap-gutter relative overflow-hidden">
+    <section className="reveal max-w-container-max mx-auto px-12 py-xl md:py-[120px] flex flex-col md:grid md:grid-cols-12 gap-gutter relative overflow-hidden">
       {/* Text column - Left */}
       <div className="md:col-span-7 flex flex-col justify-center z-10 reveal active">
         <span className="font-label-md text-label-md text-secondary mb-base tracking-widest uppercase">
