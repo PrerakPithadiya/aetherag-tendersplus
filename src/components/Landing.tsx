@@ -466,7 +466,7 @@ export default function Landing() {
                     </a>
                   </li>
                   <li>
-                    <a className="hover:text-secondary" href="#/login">
+                    <a className="hover:text-secondary" href="#/terms">
                       Terms of Service
                     </a>
                   </li>
@@ -501,7 +501,7 @@ export default function Landing() {
               © 2026 AetherAg TendersPlus. All rights reserved. Precision in every field.
             </span>
             <div className="flex gap-6">
-              <a className="hover:text-secondary underline decoration-secondary" href="#/login">
+              <a className="hover:text-secondary underline decoration-secondary" href="#/terms">
                 Terms
               </a>
               <a className="hover:text-secondary underline decoration-secondary" href="#/login">

@@ -121,7 +121,7 @@ export default function Footer() {
             <a className="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#privacy">
               Privacy Policy
             </a>
-            <a className="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#terms">
+            <a className="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#/terms">
               Terms of Service
             </a>
             <a className="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#/enterprise#contact">

@@ -97,8 +97,6 @@ export default function Platform() {
       chartObserver.observe(currentChartRef);
     }
 
-    window.scrollTo(0, 0);
-
     return () => {
       document.title = prevTitle;
       if (metaDesc && prevDesc) {
@@ -851,7 +849,7 @@ export default function Platform() {
                   </a>
                 </li>
                 <li>
-                  <a className="font-body text-body-md text-on-surface-variant hover:text-secondary transition-colors" href="#">
+                  <a className="font-body text-body-md text-on-surface-variant hover:text-secondary transition-colors" href="#/terms">
                     Terms of Service
                   </a>
                 </li>

@@ -167,8 +167,8 @@ export default function Signup() {
 
         input:focus {
           outline: none !important;
-          border-color: #3b6934 !important;
-          box-shadow: 0 0 0 1px #3b6934 !important;
+          border-bottom-color: #3b6934 !important;
+          box-shadow: none !important;
         }
       `}</style>
 

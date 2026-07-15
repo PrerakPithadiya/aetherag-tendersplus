@@ -114,9 +114,6 @@ export default function Research() {
       observer.observe(section);
     });
 
-    // Scroll to top on mount
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
     return () => {
       document.title = prevTitle;
       if (metaDesc && prevDesc) {
@@ -494,7 +491,7 @@ export default function Research() {
           <nav className="flex flex-wrap justify-center gap-8">
             <a className="font-body text-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#ethics">Ethics Statement</a>
             <a className="font-body text-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#privacy">Data Privacy</a>
-            <a className="font-body text-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#terms">Terms of Service</a>
+            <a className="font-body text-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#/terms">Terms of Service</a>
             <a className="font-body text-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#contact">Contact</a>
             <a className="font-body text-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#support">Support</a>
           </nav>

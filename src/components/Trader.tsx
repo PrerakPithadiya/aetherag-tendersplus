@@ -49,9 +49,6 @@ export default function Trader() {
       observer.observe(section);
     });
 
-    // Scroll to top on mount
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
     return () => {
       document.title = prevTitle;
       if (metaDesc && prevDesc) {

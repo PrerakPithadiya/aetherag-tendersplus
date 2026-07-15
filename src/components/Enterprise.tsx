@@ -70,8 +70,6 @@ export default function Enterprise() {
         const el = document.getElementById("contact");
         if (el) el.scrollIntoView({ behavior: "smooth" });
       }, 150);
-    } else {
-      window.scrollTo(0, 0);
     }
 
     return () => {
@@ -617,7 +615,7 @@ export default function Enterprise() {
           <div className="grid grid-cols-2 gap-4 text-left">
             <div className="space-y-2">
               <h4 className="font-label text-label-sm uppercase tracking-widest text-primary mb-4 font-bold">Legal</h4>
-              <a className="block text-on-surface-variant/70 hover:text-secondary text-sm" href="#">
+              <a className="block text-on-surface-variant/70 hover:text-secondary text-sm" href="#/terms">
                 Terms of Service
               </a>
               <a className="block text-on-surface-variant/70 hover:text-secondary text-sm" href="#">
