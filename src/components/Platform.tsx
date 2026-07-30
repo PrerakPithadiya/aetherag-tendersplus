@@ -367,74 +367,101 @@ export default function Platform() {
 
               {/* Floating Sensor Probe 1: Node AE-04 (Optimal) */}
               <div
-                className="absolute top-1/4 left-1/3 group cursor-pointer z-10"
+                className="absolute top-1/4 left-1/3 group cursor-pointer z-30 p-2 -m-2"
                 onMouseEnter={() => setHoveredNode("AE-04")}
                 onMouseLeave={() => setHoveredNode(null)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setHoveredNode(hoveredNode === "AE-04" ? null : "AE-04");
+                }}
               >
-                <div className="w-3 h-3 bg-secondary rounded-full animate-pulse-green ring-4 ring-secondary/20 flex items-center justify-center">
-                  <div className="w-1 h-1 bg-white rounded-full"></div>
+                <div className="w-4 h-4 bg-secondary rounded-full animate-pulse-green ring-4 ring-secondary/30 flex items-center justify-center shadow-lg transition-transform group-hover:scale-125">
+                  <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
                 </div>
 
-                {/* Tooltip AE-04 */}
+                {/* Tooltip AE-04 (Opens Upwards to avoid clipping) */}
                 <div
-                  className={`absolute top-6 left-1/2 -translate-x-1/2 bg-background border border-outline text-[10px] p-2 rounded shadow-lg whitespace-nowrap z-20 transition-all duration-300 text-left ${
-                    hoveredNode === "AE-04" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                  className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-3 bg-surface/95 backdrop-blur-md border border-secondary/40 text-xs p-3 rounded-xl shadow-2xl whitespace-nowrap z-40 transition-all duration-300 text-left pointer-events-auto ${
+                    hoveredNode === "AE-04" ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 translate-y-2 pointer-events-none"
                   }`}
                 >
-                  <div className="font-bold text-primary">Probe Node AE-04</div>
+                  <div className="font-bold text-primary flex items-center gap-1.5 mb-1">
+                    <span className="w-2 h-2 rounded-full bg-secondary"></span>
+                    Probe Node AE-04
+                  </div>
                   <div className="text-on-surface-variant font-body">Depth: 45cm</div>
                   <div className="text-on-surface-variant font-body">Salinity: 1.2 dS/m</div>
+                  <div className="text-secondary font-mono text-[10px] font-bold mt-1 uppercase">Status: Optimal</div>
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-surface"></div>
                 </div>
               </div>
 
               {/* Floating Sensor Probe 2: Node AE-12 (Anomaly - Hydration Low) */}
               <div
-                className={`absolute bottom-1/2 right-1/4 group cursor-pointer z-10 transition-all duration-500 ${
+                className={`absolute bottom-1/2 right-1/4 group cursor-pointer z-30 p-2 -m-2 transition-all duration-500 ${
                   anomalyChecked ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-90 pointer-events-none"
                 }`}
                 onMouseEnter={() => setHoveredNode("AE-12")}
                 onMouseLeave={() => setHoveredNode(null)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setHoveredNode(hoveredNode === "AE-12" ? null : "AE-12");
+                }}
               >
-                <div className="w-3 h-3 bg-error rounded-full ring-4 ring-error/20 flex items-center justify-center">
-                  <div className="w-1 h-1 bg-white rounded-full"></div>
+                <div className="w-4 h-4 bg-error rounded-full ring-4 ring-error/30 flex items-center justify-center shadow-lg transition-transform group-hover:scale-125">
+                  <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
                 </div>
 
                 {/* Pulsing error effect */}
                 {anomalyChecked && (
-                  <div className="absolute inset-0 bg-error rounded-full animate-ping opacity-60 pointer-events-none"></div>
+                  <div className="absolute inset-2 bg-error rounded-full animate-ping opacity-60 pointer-events-none"></div>
                 )}
 
-                {/* Tooltip AE-12 */}
+                {/* Tooltip AE-12 (Opens Upwards to avoid clipping) */}
                 <div
-                  className={`absolute top-6 left-1/2 -translate-x-1/2 bg-background border border-error text-[10px] p-2 rounded shadow-lg whitespace-nowrap z-20 transition-all duration-300 text-left ${
-                    hoveredNode === "AE-12" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                  className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-3 bg-surface/95 backdrop-blur-md border border-error/50 text-xs p-3 rounded-xl shadow-2xl whitespace-nowrap z-40 transition-all duration-300 text-left pointer-events-auto ${
+                    hoveredNode === "AE-12" ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 translate-y-2 pointer-events-none"
                   }`}
                 >
-                  <div className="font-bold text-error">Warning: Hydration Low</div>
+                  <div className="font-bold text-error flex items-center gap-1.5 mb-1">
+                    <span className="w-2 h-2 rounded-full bg-error animate-ping"></span>
+                    Warning: Hydration Low
+                  </div>
                   <div className="text-on-surface-variant font-body">Sector 12-F</div>
                   <div className="text-on-surface-variant font-body">Action Req: Auto-Irrigate</div>
+                  <div className="text-error font-mono text-[10px] font-bold mt-1 uppercase">Status: Alert Active</div>
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-surface"></div>
                 </div>
               </div>
 
               {/* Floating Sensor Probe 3: Node AE-08 (Baseline) */}
               <div
-                className="absolute top-[65%] left-[48%] group cursor-pointer z-10"
+                className="absolute top-[60%] left-[48%] group cursor-pointer z-30 p-2 -m-2"
                 onMouseEnter={() => setHoveredNode("AE-08")}
                 onMouseLeave={() => setHoveredNode(null)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setHoveredNode(hoveredNode === "AE-08" ? null : "AE-08");
+                }}
               >
-                <div className="w-3 h-3 bg-surface-tint rounded-full ring-4 ring-surface-tint/20 flex items-center justify-center">
-                  <div className="w-1 h-1 bg-white rounded-full"></div>
+                <div className="w-4 h-4 bg-secondary-fixed-dim rounded-full ring-4 ring-secondary/30 flex items-center justify-center shadow-lg transition-transform group-hover:scale-125">
+                  <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
                 </div>
 
-                {/* Tooltip AE-08 */}
+                {/* Tooltip AE-08 (Opens Upwards to avoid bottom clipping & legend overlap) */}
                 <div
-                  className={`absolute top-6 left-1/2 -translate-x-1/2 bg-background border border-outline text-[10px] p-2 rounded shadow-lg whitespace-nowrap z-20 transition-all duration-300 text-left ${
-                    hoveredNode === "AE-08" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                  className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-3 bg-surface/95 backdrop-blur-md border border-secondary/40 text-xs p-3 rounded-xl shadow-2xl whitespace-nowrap z-40 transition-all duration-300 text-left pointer-events-auto ${
+                    hoveredNode === "AE-08" ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 translate-y-2 pointer-events-none"
                   }`}
                 >
-                  <div className="font-bold text-primary">Probe Node AE-08</div>
+                  <div className="font-bold text-primary flex items-center gap-1.5 mb-1">
+                    <span className="w-2 h-2 rounded-full bg-secondary-fixed-dim"></span>
+                    Probe Node AE-08
+                  </div>
                   <div className="text-on-surface-variant font-body">Depth: 30cm</div>
                   <div className="text-on-surface-variant font-body">Salinity: 0.9 dS/m</div>
+                  <div className="text-primary font-mono text-[10px] font-bold mt-1 uppercase">Status: Baseline OK</div>
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-surface"></div>
                 </div>
               </div>
 

@@ -101,7 +101,7 @@ function AppContent() {
         nextHistoryIndex.current = newIdx + 1;
         currentHistoryIndex.current = newIdx;
         window.history.replaceState({ index: newIdx }, "");
-        scrollMemory.current[newIdx] = 0;
+        scrollMemory.current[newIdx] = 0; 
         window.scrollTo(0, 0);
       }
     }
@@ -272,9 +272,7 @@ function AppContent() {
         ) : (
           <>
             <Hero />
-            <div className="reveal">
-              <Stewardship />
-            </div>
+            <Stewardship />
             <div className="reveal">
               <Modules />
             </div>
