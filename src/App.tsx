@@ -57,10 +57,13 @@ function AppContent() {
   }, []);
 
   const getBaseRoute = (hash: string) => {
-    if (hash.startsWith("#/enterprise") || hash === "#enterprise") return "enterprise";
-    if (hash.startsWith("#/platform") || hash === "#platform") return "platform";
+    if (hash.startsWith("#/enterprise") || hash === "#enterprise")
+      return "enterprise";
+    if (hash.startsWith("#/platform") || hash === "#platform")
+      return "platform";
     if (hash.startsWith("#/trader") || hash === "#trader") return "trader";
-    if (hash.startsWith("#/research") || hash === "#research") return "research";
+    if (hash.startsWith("#/research") || hash === "#research")
+      return "research";
     if (hash.startsWith("#/login") || hash === "#login") return "login";
     if (hash.startsWith("#/signup") || hash === "#signup") return "signup";
     if (hash.startsWith("#/terms") || hash === "#terms") return "terms";
@@ -101,39 +104,32 @@ function AppContent() {
         nextHistoryIndex.current = newIdx + 1;
         currentHistoryIndex.current = newIdx;
         window.history.replaceState({ index: newIdx }, "");
-        scrollMemory.current[newIdx] = 0; 
+        scrollMemory.current[newIdx] = 0;
         window.scrollTo(0, 0);
       }
     }
   }, [currentHash]);
 
   const isEnterpriseRoute =
-    currentHash.startsWith("#/enterprise") ||
-    currentHash === "#enterprise";
+    currentHash.startsWith("#/enterprise") || currentHash === "#enterprise";
 
   const isPlatformRoute =
-    currentHash.startsWith("#/platform") ||
-    currentHash === "#platform";
+    currentHash.startsWith("#/platform") || currentHash === "#platform";
 
   const isTraderRoute =
-    currentHash.startsWith("#/trader") ||
-    currentHash === "#trader";
+    currentHash.startsWith("#/trader") || currentHash === "#trader";
 
   const isResearchRoute =
-    currentHash.startsWith("#/research") ||
-    currentHash === "#research";
+    currentHash.startsWith("#/research") || currentHash === "#research";
 
   const isLoginRoute =
-    currentHash.startsWith("#/login") ||
-    currentHash === "#login";
+    currentHash.startsWith("#/login") || currentHash === "#login";
 
   const isSignupRoute =
-    currentHash.startsWith("#/signup") ||
-    currentHash === "#signup";
+    currentHash.startsWith("#/signup") || currentHash === "#signup";
 
   const isTermsRoute =
-    currentHash.startsWith("#/terms") ||
-    currentHash === "#terms";
+    currentHash.startsWith("#/terms") || currentHash === "#terms";
 
   // Navigation guard
   useEffect(() => {
@@ -141,7 +137,12 @@ function AppContent() {
 
     if (!user) {
       // If logged out, only allow login or signup routes. Anything else resets/keeps landing.
-      if (isEnterpriseRoute || isPlatformRoute || isTraderRoute || isResearchRoute) {
+      if (
+        isEnterpriseRoute ||
+        isPlatformRoute ||
+        isTraderRoute ||
+        isResearchRoute
+      ) {
         window.location.hash = "#/login";
       }
     } else {
@@ -150,10 +151,29 @@ function AppContent() {
         window.location.hash = "#";
       }
     }
-  }, [user, loading, isEnterpriseRoute, isPlatformRoute, isTraderRoute, isResearchRoute, isLoginRoute, isSignupRoute]);
+  }, [
+    user,
+    loading,
+    isEnterpriseRoute,
+    isPlatformRoute,
+    isTraderRoute,
+    isResearchRoute,
+    isLoginRoute,
+    isSignupRoute,
+  ]);
 
   useEffect(() => {
-    if (!user || isLoginRoute || isSignupRoute || isEnterpriseRoute || isPlatformRoute || isTraderRoute || isResearchRoute || isTermsRoute) return;
+    if (
+      !user ||
+      isLoginRoute ||
+      isSignupRoute ||
+      isEnterpriseRoute ||
+      isPlatformRoute ||
+      isTraderRoute ||
+      isResearchRoute ||
+      isTermsRoute
+    )
+      return;
 
     const observerOptions = {
       threshold: 0.1,
@@ -174,7 +194,14 @@ function AppContent() {
     // Handle smooth scroll for anchor links
     if (currentHash) {
       const id = currentHash.replace("#/", "").replace("#", "");
-      if (id && id !== "enterprise" && id !== "platform" && id !== "research" && id !== "login" && id !== "signup") {
+      if (
+        id &&
+        id !== "enterprise" &&
+        id !== "platform" &&
+        id !== "research" &&
+        id !== "login" &&
+        id !== "signup"
+      ) {
         const el = document.getElementById(id);
         if (el) {
           setTimeout(() => {
@@ -187,7 +214,16 @@ function AppContent() {
     return () => {
       elements.forEach((el) => observer.unobserve(el));
     };
-  }, [user, isEnterpriseRoute, isPlatformRoute, isTraderRoute, isResearchRoute, isLoginRoute, isSignupRoute, currentHash]);
+  }, [
+    user,
+    isEnterpriseRoute,
+    isPlatformRoute,
+    isTraderRoute,
+    isResearchRoute,
+    isLoginRoute,
+    isSignupRoute,
+    currentHash,
+  ]);
 
   if (loading) {
     return (
@@ -196,7 +232,9 @@ function AppContent() {
           <span className="material-symbols-outlined text-4xl animate-spin text-secondary">
             progress_activity
           </span>
-          <span className="font-label text-label-md">Loading AetherAg TendersPlus...</span>
+          <span className="font-label text-label-md">
+            Loading AetherAg TendersPlus...
+          </span>
         </div>
       </div>
     );
@@ -217,17 +255,23 @@ function AppContent() {
           {/* Navigation Header */}
           <header className="w-full top-0 sticky z-50 bg-surface border-b border-outline-variant backdrop-blur-md bg-opacity-90">
             <nav className="flex justify-between items-center px-6 md:px-12 py-4 max-w-[1280px] mx-auto">
-              <div 
-                className="font-headline text-headline-sm font-bold text-primary select-none cursor-pointer" 
-                onClick={() => window.location.hash = "#"}
+              <div
+                className="font-headline text-headline-sm font-bold text-primary select-none cursor-pointer"
+                onClick={() => (window.location.hash = "#")}
               >
                 AetherAg TendersPlus
               </div>
               <div className="flex items-center gap-4">
-                <a className="font-label text-label-md text-on-surface-variant hover:text-primary px-4 py-2" href="#/login">
+                <a
+                  className="font-label text-label-md text-on-surface-variant hover:text-primary px-4 py-2"
+                  href="#/login"
+                >
                   Log In
                 </a>
-                <a className="bg-primary text-on-primary px-6 py-2.5 rounded-DEFAULT font-label text-label-md hover:opacity-80 transition-opacity text-center block" href="#/signup">
+                <a
+                  className="bg-primary text-on-primary px-6 py-2.5 rounded-DEFAULT font-label text-label-md hover:opacity-80 transition-opacity text-center block"
+                  href="#/signup"
+                >
                   Join TendersPlus
                 </a>
               </div>
@@ -241,7 +285,12 @@ function AppContent() {
             <div className="max-w-[1280px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-label-md text-on-surface-variant">
               <span>© 2026 AetherAg TendersPlus. All rights reserved.</span>
               <div className="flex gap-6 font-label-md">
-                <a className="hover:text-secondary underline decoration-secondary" href="#/">Back to Home</a>
+                <a
+                  className="hover:text-secondary underline decoration-secondary"
+                  href="#/"
+                >
+                  Back to Home
+                </a>
               </div>
             </div>
           </footer>
@@ -285,7 +334,10 @@ function AppContent() {
           </>
         )}
       </main>
-      {!isEnterpriseRoute && !isPlatformRoute && !isTraderRoute && !isResearchRoute && <Footer />}
+      {!isEnterpriseRoute &&
+        !isPlatformRoute &&
+        !isTraderRoute &&
+        !isResearchRoute && <Footer />}
     </div>
   );
 }
@@ -299,4 +351,3 @@ function App() {
 }
 
 export default App;
-
